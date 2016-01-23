@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova'])
+angular.module('smni', ['ionic', 'smni.controllers', 'smni.services', 'ngCordova', 'youtube-embed'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -40,46 +40,64 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
   // Each tab has its own nav history stack:
 
-  .state('tab.dash', {
-    url: '/dash',
+  .state('tab.home', {
+    url: '/home',
     views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
+      'tab-home': {
+        templateUrl: 'templates/tab-home.html',
+        controller: 'HomeCtrl'
       }
     }
   })
 
-  .state('tab.chats', {
-      url: '/chats',
+  .state('tab.programs', {
+      url: '/programs',
       views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
+        'tab-programs': {
+          templateUrl: 'templates/tab-programs.html',
+          controller: 'ProgramsCtrl'
         }
       }
     })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
+    .state('tab.program-detail', {
+      url: '/programs/:programId',
       views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
+        'tab-programs': {
+          templateUrl: 'templates/program-detail.html',
+          controller: 'ProgramDetailCtrl'
         }
       }
     })
+    .state('tab.video', {
+      url: '/video/:videoId',
+      views: {
+        'tab-programs': {
+          templateUrl: 'templates/video.html',
+          controller: 'playVideoCtrl'
+        }
+      }
+    })
+    // .state('tab.program-detail', {
+    //   url: '/programs/:chatId',
+    //   views: {
+    //     'tab-programs': {
+    //       templateUrl: 'templates/program-detail.html',
+    //       controller: 'ChatDetailCtrl'
+    //     }
+    //   }
+    // })
 
-  .state('tab.account', {
-    url: '/account',
+  .state('tab.about', {
+    url: '/about',
     views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
+      'tab-about': {
+        templateUrl: 'templates/tab-about.html',
         controller: 'AccountCtrl'
       }
     }
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/tab/home');
 
 });

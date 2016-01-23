@@ -1,0 +1,23 @@
+<ion-view view-title="Now Playing" cache-view="false">
+  <ion-content class="padding-top">
+  <div class="row">
+  	<div class="small-12 columns">
+	    <div class="embed-responsive embed-responsive-16by9">
+	    	<youtube-video class="embed-responsive-item" video-id="playVideoId" player-vars="playerVars" player="videoPlayer"></youtube-video>
+	    </div>
+  	</div>
+  </div>
+	<div class="card video-info">
+		<div class="item item-divider item-text-wrap item-stable">
+			<h2>{{videoInfo[0].snippet.title}}</h2>
+		</div>
+		<div class="item item-body item-text-wrap">
+		    <p>{{videoInfo[0].snippet.description}}</p>
+		    <p>
+		    	<a href="#" class="subdued positive"><i class="icon ion-ios-redo"></i> Share</a>
+		    </p>
+		</div>
+	</div>
+
+  </ion-content>
+</ion-view>
