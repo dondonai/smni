@@ -20,7 +20,9 @@ angular.module('smni', ['ionic', 'smni.controllers', 'smni.services', 'ngCordova
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
   });
+
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -92,7 +94,7 @@ angular.module('smni', ['ionic', 'smni.controllers', 'smni.services', 'ngCordova
     views: {
       'tab-about': {
         templateUrl: 'templates/tab-about.html',
-        controller: 'AccountCtrl'
+        controller: 'AboutCtrl'
       }
     }
   });

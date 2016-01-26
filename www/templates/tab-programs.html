@@ -1,7 +1,7 @@
 <ion-view view-title="Programs">
-  <ion-content class="">
-    <div class="row">
-      <div class="small-6 medium-6 colums" ng-repeat="program in programs" ui-sref="tab.program-detail({programId: program.playlistid})">
+  <ion-content>
+    <div>
+      <div class="one-half" ng-repeat="program in programs" ui-sref="tab.program-detail({programId: program.playlistid})">
         <img class="full-image" ng-src="{{program.img}}">
         <!-- <h2>{{program.name}}</h2> -->
       </div>

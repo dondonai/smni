@@ -1,245 +1,250 @@
 angular.module('smni.controllers', [])
 
-.controller('HomeCtrl', ['$scope', '$cordovaInAppBrowser', '$cordovaNetwork', '$ionicPopup', function($scope, $cordovaInAppBrowser, $cordovaNetwork, $ionicPopup) {
+.controller('HomeCtrl', ['$scope', '$cordovaInAppBrowser', '$cordovaNetwork', '$ionicPopup', '$timeout', function($scope, $cordovaInAppBrowser, $cordovaNetwork, $ionicPopup, $timeout) {
+
+  // $scope.init = function () {
+  //   checkConnection();
+  // }
+
+  // $scope.$on('$ionicView.enter', function(e) {
+  //   $scope.checkConnection();
+  //   // document.addEventListener("deviceready", $scope.checkConnection, false);
+  // });
+
+  // document.addEventListener("deviceready", $scope.checkConnection, false);
+
+  // Check internet connection
+  $scope.checkConnection = function () {
+
+    var type = $cordovaNetwork.getNetwork()
+    var isOnline = $cordovaNetwork.isOnline()
+    var isOffline = $cordovaNetwork.isOffline()
+    var connected;
+
+    // alert( 'You are connected via ' + type );
+
+    if( isOffline === true ) {
+      // alert('You are offline');
+      $ionicPopup.alert({
+        title: "No Internet Connection",
+        content: "You are not connected to the internet."
+      }).then( function () {
+        connected = false;
+        $scope.connectionStatus = "Offline";
+      })
+    } else {
+      // alert('You are online');
+      connected = true;
+      $scope.connectionStatus = "Online";
+    }
+
+    $scope.$broadcast('scroll.refreshComplete');
+  }
+
+  $scope.$on('$cordovaNetwork:online', function(event, networkState) {
+      var onlineState = networkState;
+      // alert( networkState );
+      $ionicPopup.alert({
+        title: "Internet Connected",
+        content: 'You are now connected to the internet!'
+      })
+  })
+
+  $scope.$on('$cordovaNetwork:offline', function(event, networkState) {
+    var onlineState = networkState;
+    $ionicPopup.alert({
+      title: "Internet disconnected",
+      content: 'You are now offline.'
+    })
+  })
+
+  // checkConnection();
+  // $scope.init();
 
     var options = {
-      location: 'no',
-      clearcache: 'no',
-      toolbar: 'no'
-    };
-
-    $scope.init = function() {
-      // $scope.connectionChecker();
+        location: 'no',
+        clearcache: 'no',
+        toolbar: 'no'
     };
 
     $scope.sourceRtmp = function() {
-      $cordovaInAppBrowser.open('rtmp://smni.live-s.cdn.bitgravity.com/cdn-live/_definst_/smni/live/feed001', '_system', options);
-    };
+        $cordovaInAppBrowser.open('rtmp://smni.live-s.cdn.bitgravity.com/cdn-live/_definst_/smni/live/feed001', '_system', options);
+    }
+    $scope.sourceHTTP = function() {
+        $cordovaInAppBrowser.open('http://smni.live-s.cdn.bitgravity.com:1935/content:cdn-live/smni/live/feed001', '_system', options);
+    }
+    $scope.sourceHTTP2 = function() {
+        $cordovaInAppBrowser.open('http://smni.live-s.cdn.bitgravity.com/cdn-live/_definst_/smni/live/feed001/playlist.m3u8?width=490&height=350&streamType=live&AutoPlay=true&ScrubMode=simple&BufferTime=1.5&AutoBitrate=off&scaleMode=letterbox&DefaultRatio=1.777778&LogoPosition=topleft&ColorBase=0&ColorControl=14277081&ColorHighlight=16777215&ColorFeature=14277081&selectedIndex=0', '_system', options);
+    }
 
-    $scope.$on('$cordovaNetwork:online', function(event, networkState) {
-      var onlineState = networkState;
-      alert(onlineState);
-      $scope.restartApp();
-      // $scope.connectionChecker();
-    });
 
-    $scope.restartApp = function() {
-      // navigator.app.exitApp();
-      navigator.app.loadUrl("file:///android_asset/www/index.html", {wait:2000, loadingDialog:"Wait,Loading App", loadUrlTimeoutValue: 60000});
-    };
 
-    // $scope.connectionChecker = function() {
+}])
 
-    //     var type = $cordovaNetwork.getNetwork(),
-    //         isOnline = $cordovaNetwork.isOnline(),
-    //         isOffline = $cordovaNetwork.isOffline();
+.controller('ProgramsCtrl', ['$scope', '$stateParams', 'ProgramListFactory', function($scope, $stateParams, ProgramListFactory) {
 
-    //     if( isOffline === true ) {
-    //       // alert( 'You are online' );
-    //       $scope.offline = true;
+    $scope.programs = ProgramListFactory.all();
+    console.log($scope.programs);
 
-    //       $ionicPopup.alert({
-    //         title: "No Internet Connection",
-    //         content: "You need to have an internet connection to use the app.<br><br>Click OK to close the app"
-    //       })
-    //       .then( function() {
-    //         // ionic.Platform.exitApp();
-    //         console.log( 'No connection' );
-    //         $scope.connectionStatus = "Offline";
-    //       });
 
-    //     } else {
-    //       $scope.connectionStatus = "Online";
-    //     }
-    //   }
-    // };
-    
-    document.addEventListener("deviceready", function () {
+}])
 
-        var type = $cordovaNetwork.getNetwork()
+.controller('ProgramDetailCtrl', ['$scope', '$stateParams', 'ProgramsFactory', 'ProgramListFactory', '$ionicLoading', '$cordovaNetwork', '$ionicPopup', function($scope, $stateParams, ProgramsFactory, ProgramListFactory, $ionicLoading, $cordovaNetwork, $ionicPopup) {
 
+    // $scope.program = ProgramListFactory.get( $stateParams.programId );
+
+
+    $scope.init = function() {
         var isOnline = $cordovaNetwork.isOnline()
-
-        var isOffline = $cordovaNetwork.isOffline()
-
-
-        if( isOffline === true ) {
-          // alert( 'You are online' );
-          $scope.offline = true;
-
-          $ionicPopup.alert({
-            title: "No Internet Connection",
-            content: "You need to have an internet connection to use the app.<br><br>Click OK to close the app"
-          })
-          .then( function() {
-            // ionic.Platform.exitApp();
-            console.log( 'No connection' );
-            $scope.connectionStatus = "Offline";
-          });
-
+        if (isOnline === true) {
+            $scope.programItem();
         } else {
-          $scope.connectionStatus = "Online";
+            $scope.isOffline();
+        }
+    }
+
+    var playlistId = $stateParams.programId;
+
+    $scope.programItem = function() {
+        var params = {
+            type: 'playlistItems',
+            maxResults: '20',
+            playlistId: playlistId
         }
 
+        $ionicLoading.show();
 
-      }, false);
+        ProgramsFactory.get(params)
+            .$promise.then(function(res) {
+                $ionicLoading.hide();
+                $scope.programItems = res.items;
+                console.log($scope.programItems);
 
-  $scope.init();
+            }, function(err) {
+                console.log(err);
+                // alert( 'Error occured: ' + err );
+                // ionicLoading.hide();
+            });
+    }
 
+    $scope.isOffline = function() {
+        $ionicPopup.alert({
+            title: "No Internet Connection",
+            content: "You are not connected to the internet."
+        }).then(function() {
+            $scope.offline = true;
+            $ionicLoading.hide();
+        })
+    }
 
+    $scope.program = ProgramListFactory.get($stateParams.programId);
+
+    $scope.init();
 
 }])
 
-.controller( 'ProgramsCtrl', ['$scope', '$stateParams', 'ProgramListFactory', function( $scope, $stateParams, ProgramListFactory ) {
-  
-  $scope.programs = ProgramListFactory.all();
-  console.log( $scope.programs );
+.controller('playVideoCtrl', ['$scope', '$stateParams', 'ProgramsFactory', '$ionicLoading', function($scope, $stateParams, ProgramsFactory, $ionicLoading) {
 
-  
-}])
+    var videoId = $stateParams.videoId;
+    var player = "";
 
-.controller( 'ProgramDetailCtrl', ['$scope', '$stateParams', 'ProgramsFactory', 'ProgramListFactory', '$ionicLoading', '$cordovaNetwork', '$ionicPopup', function( $scope, $stateParams, ProgramsFactory, ProgramListFactory, $ionicLoading, $cordovaNetwork, $ionicPopup ) {
-  
-  // $scope.program = ProgramListFactory.get( $stateParams.programId );
+    $scope.theVideo = function() {
 
+        var params = {
+            type: 'videos',
+            id: videoId
+        };
 
-  $scope.init = function() {
-    var isOnline = $cordovaNetwork.isOnline()
-    if( isOnline === true ) {
-      $scope.programItem();
-    } else {
-      $scope.isOffline();
-    }
-  }
+        ProgramsFactory.get(params)
+            .$promise.then(function(res) {
+                $scope.playVideoId = videoId;
+                $scope.videoInfo = res.items;
+                console.log(res);
+            }, function(err) {
+                console.log(err);
+                alert('Error: ' + err);
 
-  var playlistId = $stateParams.programId;
+                // ionicLoading.hide();
+            });
 
-  $scope.programItem = function() {
-    var params = {
-      type: 'playlistItems',
-      maxResults: '20',
-      playlistId: playlistId
     }
 
-    $ionicLoading.show();
-
-    ProgramsFactory.get( params )
-      .$promise.then( function(res) {
+    $scope.$on('youtube.player.ready', function($event, player) {
         $ionicLoading.hide();
-        $scope.programItems = res.items;
-        console.log( $scope.programItems );
+        var myPlayer = true;
+    });
 
-      }, function(err) {
-        console.log( err );
-        // alert( 'Error occured: ' + err );
-        // ionicLoading.hide();
-      });       
-  }
-
-  $scope.isOffline = function() {
-    $ionicPopup.alert({
-      title: "No Internet Connection",
-      content: "You are not connected to the internet."
-    }).then( function() {
-      $scope.offline = true;
-    })
-  }
-
-  $scope.program = ProgramListFactory.get($stateParams.programId);
-
-  $scope.init();
-
-}])
-
-.controller('playVideoCtrl', ['$scope', '$stateParams', 'ProgramsFactory', '$ionicLoading', function( $scope, $stateParams, ProgramsFactory, $ionicLoading ) {
-
-  var videoId = $stateParams.videoId;
-
-  $scope.theVideo = function() {
-
-    var params = {
-      type: 'videos',
-      id: videoId
+    $scope.playerVars = {
+        controls: 2,
+        autoplay: 1,
+        showinfo: 0
     };
 
-    ProgramsFactory.get( params )
-      .$promise.then( function(res) {
-        $scope.playVideoId = videoId;
-        $scope.videoInfo = res.items;
-        console.log(res);
-      }, function(err) {
-        console.log( err );
-        alert( 'Error: ' + err );
+    // $ionicLoading.show();
 
-        ionicLoading.hide();
-      });
-    
-  }
-
-  $scope.$on('youtube.player.ready', function($event, player) {
-    $ionicLoading.hide();
-  });
-
-  $scope.playerVars = {
-      controls: 2,
-      autoplay: 1,
-      showinfo: 0
-  };
-
-  $ionicLoading.show();
-
-  $scope.theVideo();
+    $scope.theVideo();
 
 }])
 
-.controller('videoListCtrl', ['$scope', 'ProgramsFactory', '$stateParams', '$log', function( $scope, ProgramsFactory, $stateParams, $log ) {
+.controller('videoListCtrl', ['$scope', 'ProgramsFactory', '$stateParams', '$log', function($scope, ProgramsFactory, $stateParams, $log) {
 
-  // var playlistId = $stateParams.playlistId;
+    // var playlistId = $stateParams.playlistId;
 
 
-  $scope.getVideosFrmPrograms = function() {
-    var params = {
-      type: 'playlistItems',
-      maxResults: '20',
-      playlistId: 'PLBvNelqMoACDq83y9R3IKvJlQLX3uoCJ7'
+    $scope.getVideosFrmPrograms = function() {
+        var params = {
+            type: 'playlistItems',
+            maxResults: '20',
+            playlistId: 'PLBvNelqMoACDq83y9R3IKvJlQLX3uoCJ7'
+        }
+
+        ProgramsFactory.get(params)
+            .$promise.then(function(res) {
+                $log.info(res);
+            }, function(err) {
+                console.log(err);
+            });
     }
 
-    ProgramsFactory.get( params )
-      .$promise.then(function( res ) {
-        $log.info(res);
-      }, function( err ) {
-        console.log( err );
-      });
-  }
+    $scope.getVideosFrmPrograms();
 
 
+}])
 
-  $scope.getVideosFrmPrograms();
+.controller('AboutCtrl', ['$scope', '$cordovaInAppBrowser', function ($scope, $cordovaInAppBrowser) {
+    
+    var options = {
+        location: 'no',
+        clearcache: 'no',
+        toolbar: 'no'
+    };
 
-
+    $scope.like = function () {
+        $cordovaInAppBrowser.open('https://www.facebook.com/SMNIApp/', '_blank', options);
+    };
 }])
 
 .controller('ChatsCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+    // With the new view caching in Ionic, Controllers are only called
+    // when they are recreated or on app start, instead of every page change.
+    // To listen for when this page is active (for example, to refresh data),
+    // listen for the $ionicView.enter event:
+    //
+    //$scope.$on('$ionicView.enter', function(e) {
+    //});
 
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
+    $scope.chats = Chats.all();
+    $scope.remove = function(chat) {
+        Chats.remove(chat);
+    };
 })
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
+    $scope.chat = Chats.get($stateParams.chatId);
 })
 
 .controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
+    $scope.settings = {
+        enableFriends: true
+    };
 });

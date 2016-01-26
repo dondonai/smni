@@ -1,7 +1,12 @@
-<ion-view view-title="SMNI is {{connectionStatus}}">
+<ion-view view-title="SMNI Main">
+  
   <ion-content class="padding-horizontal">
+  <ion-refresher
+    pulling-text="Pull to refresh..."
+    on-refresh="checkConnection()">
+  </ion-refresher>
   <div class="padding-top">
-    <div class="item item-text-wrap item-assertive" ng-if="offline === true"><i class="icon ion-ios-close-outline"></i> No internet connection</div>
+    <div class="item item-text-wrap item-assertive" ng-if="connected === false"><i class="icon ion-ios-close-outline"></i> No internet connection</div>
   </div>
     <div class="card padding-top">
       
@@ -10,7 +15,7 @@
       </div>
       
       <div class="padding">
-        <a class="button icon-left button-block button-stable" href="#" ng-click="sourceRtmp()" ng-if="offline !== true">
+        <a class="button icon-left button-block button-stable" href="#" ng-click="sourceRtmp()">
             <i class="icon ion-ios-play"></i> Launch Streaming
         </a>
       </div>
