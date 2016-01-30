@@ -126,7 +126,6 @@ angular.module('smni.controllers', [])
 
     // $scope.program = ProgramListFactory.get( $stateParams.programId );
 
-
     $scope.init = function() {
         var isOnline = $cordovaNetwork.isOnline()
         if (isOnline === true) {
@@ -173,6 +172,12 @@ angular.module('smni.controllers', [])
     $scope.program = ProgramListFactory.get($stateParams.programId);
 
     $scope.init();
+
+    $timeout(function() {
+        ionicMaterialMotion.fadeSlideIn({
+            startVelocity: 3000
+        });
+    }, 700);
 
     // Set Motion
     $timeout(function() {
