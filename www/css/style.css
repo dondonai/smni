@@ -21,29 +21,3 @@
     height: 100%;
     border: 0;
 }
-
-.row {
-    padding: 0;
-}
-
-.video-info .item {
-	border-bottom: 3px solid #ddd;
-}
-
-.one-half {
-	display: inline-block;
-	float: left;
-	width: 50%;
-}
-
-.one-half img {
-	display: block;
-}
-
-.video-list .item-avatar {
-	background: #000;
-	/*padding: 0 2%;*/
-	/*margin: 0 1%;*/
-	/*margin-left: 1%;
-	margin-right: 1%*/;
-}

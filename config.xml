@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.smni.smnistreaming" version="2.12.13" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>SMNIApp</name>
-  <description>
-        Sonshine Media Network International (SMNI) is the leader in alternative media which revolutionizes the power of the air by bringing socially responsible programs to the global audience.
+  <description>&#xD;
+        Sonshine Media Network International (SMNI) is the leader in alternative media which revolutionizes the power of the air by bringing socially responsible programs to the global audience.&#xD;
     </description>
-  <author email="adones.reballos@kojc.net" href="http://kingdomofjesuschrist.org/">
-      dOndOnAi
+  <author email="adones.reballos@kojc.net" href="http://kingdomofjesuschrist.org/">&#xD;
+      dOndOnAi&#xD;
   </author>
   <content src="index.html"/>
   <access origin="*"/>

@@ -37,7 +37,7 @@ angular.module('smni.services', ['ngResource'])
     id: 4,
     playlistid: 'PLBvNelqMoACCKcUBQE3s9Q4vnwMELszDu',
     name: 'iTestify',
-    img: 'img/kingdom-upclose.jpg'
+    img: 'img/itestify.jpg'
   }, {
     id: 5,
     playlistid: 'PLBvNelqMoACB6YIMy7tZRrI4pysW3e-sU',

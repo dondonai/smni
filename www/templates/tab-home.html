@@ -1,33 +1,53 @@
 <ion-view view-title="SMNI Main">
-  
-  <ion-content class="padding-horizontal">
-  <ion-refresher
-    pulling-text="Pull to refresh..."
-    on-refresh="checkConnection()">
-  </ion-refresher>
-  <div class="padding-top">
-    <div class="item item-text-wrap item-assertive" ng-if="connected === false"><i class="icon ion-ios-close-outline"></i> No internet connection</div>
-  </div>
-    <div class="card padding-top">
-      
-      <div class="item item-image">
-        <img ng-src="img/logo.png">
-      </div>
-      
-      <div class="padding">
-        <a class="button icon-left button-block button-stable" href="#" ng-click="sourceRtmp()">
-            <i class="icon ion-ios-play"></i> Launch Streaming
+  <ion-content ng-class="{expanded:$scope.isExpanded}" class="animate-fade-slide-in">
+    <div class="hero slide-up stable-bg" style="background-image: url('img/main-bg.jpg');">
+        <div class="content">
+            <!-- <div class="avatar" style="background-image: url('img/daenerys.jpg');"></div> -->
+            <!-- <h3><a class="assertive-900">Sonshine Media Network International</a></h3>
+            <h4></h4> -->
+        </div>
+    </div>
+    <button class="button icon-left button-block button-stable" ng-click="sourceRtmp()">
+        <i class="icon ion-ios-play"></i> Launch Streaming
+    </button>
+    <h4 class="content padding double-padding-x">Facebook Updates</h4>
+    <div class="list animate-fade-slide-in-right">
+        <a ui-sref="app.friends" class="item item-avatar item-icon-right">
+            <img src="img/sounds-of-worship.jpg">
+            <h2>Jon Snow</h2>
+            <p>Da illest illegitimate</p>
+            <i class="icon ion-chatbubble muted"></i>
         </a>
-      </div>
-
+        <a ui-sref="app.friends" class="item item-avatar item-icon-right">
+            <img src="img/give-us-this-day.jpg">
+            <h2>Sansa Stark</h2>
+            <p>&amp; Joffrey <strike>sitting</strike> sat in a tree</p>
+            <i class="icon ion-chatbubble muted"></i>
+        </a>
+        <a ui-sref="app.friends" class="item item-avatar item-icon-right">
+            <img src="img/powerline.jpg">
+            <h2>Tyrion Lannister</h2>
+            <p>B.A.M.F. imp</p>
+            <i class="icon ion-chatbubble muted"></i>
+        </a>
+        <a ui-sref="app.friends" class="item item-avatar item-icon-right">
+            <img src="img/sounds-of-worship.jpg">
+            <h2>Jon Snow</h2>
+            <p>Da illest illegitimate</p>
+            <i class="icon ion-chatbubble muted"></i>
+        </a>
+        <a ui-sref="app.friends" class="item item-avatar item-icon-right">
+            <img src="img/give-us-this-day.jpg">
+            <h2>Sansa Stark</h2>
+            <p>&amp; Joffrey <strike>sitting</strike> sat in a tree</p>
+            <i class="icon ion-chatbubble muted"></i>
+        </a>
+        <a ui-sref="app.friends" class="item item-avatar item-icon-right">
+            <img src="img/powerline.jpg">
+            <h2>Tyrion Lannister</h2>
+            <p>B.A.M.F. imp</p>
+            <i class="icon ion-chatbubble muted"></i>
+        </a>
     </div>
-    <div class="card">
-      <div class="item item-text-wrap">
-        <div class="item item-divider item-assertive"><i  class="icon ion-alert-circled"></i> Important notice</div>
-        <div class="padding">Due to some issues regarding with streaming we removed the second option and focus to the option that works best for many of the users. We politely advice that users should install a third-party video player to have a better experience using the app. For any questions please send us an email regarding your concern(s) and we will do our best to attend to it asap.</div>
-      </div>
-    </div>
-
-    <div class="padding"></div>
   </ion-content>
 </ion-view>
