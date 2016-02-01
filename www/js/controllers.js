@@ -1,6 +1,6 @@
 angular.module('smni.controllers', [])
 
-.controller('HomeCtrl', ['$scope', '$cordovaInAppBrowser', '$cordovaNetwork', '$ionicPopup', '$timeout', 'ionicMaterialMotion', 'ionicMaterialInk', function($scope, $cordovaInAppBrowser, $cordovaNetwork, $ionicPopup, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+.controller('HomeCtrl', ['$scope', '$ionicPlatform', '$cordovaInAppBrowser', '$cordovaNetwork', '$ionicPopup', '$timeout', 'ionicMaterialMotion', 'ionicMaterialInk', 'FacebookFactory', function($scope, $ionicPlatform, $cordovaInAppBrowser, $cordovaNetwork, $ionicPopup, $timeout, ionicMaterialMotion, ionicMaterialInk, FacebookFactory) {
 
   // $scope.init = function () {
   //   checkConnection();
@@ -76,7 +76,7 @@ angular.module('smni.controllers', [])
     $scope.sourceHTTP2 = function() {
         $cordovaInAppBrowser.open('http://smni.live-s.cdn.bitgravity.com/cdn-live/_definst_/smni/live/feed001/playlist.m3u8?width=490&height=350&streamType=live&AutoPlay=true&ScrubMode=simple&BufferTime=1.5&AutoBitrate=off&scaleMode=letterbox&DefaultRatio=1.777778&LogoPosition=topleft&ColorBase=0&ColorControl=14277081&ColorHighlight=16777215&ColorFeature=14277081&selectedIndex=0', '_system', options);
     }
-
+    
     // Set Motion
     $timeout(function() {
         ionicMaterialMotion.slideUp({
@@ -84,11 +84,26 @@ angular.module('smni.controllers', [])
         });
     }, 300);
 
-    $timeout(function() {
-        ionicMaterialMotion.fadeSlideInRight({
-            startVelocity: 3000
+    $scope.facebookFeeds = function ( datePosted ) {
+        FacebookFactory.get()
+        .$promise.then( function (res) {
+            $scope.feeds = res.data;
+            console.log( res.data );
+
+        $timeout( function () {
+            ionicMaterialMotion.fadeSlideInRight({
+                startVelocity: 3000
+            });
         });
-    }, 700);
+            
+        }, function (err) {
+            console.log( err );
+        });
+
+    };
+
+    $ionicPlatform.ready( $scope.facebookFeeds() );
+
 
     // Set Ink
     ionicMaterialInk.displayEffect();
