@@ -109,6 +109,11 @@ angular.module('smni.controllers', [])
     }, 300);
 
     $timeout(function() {
+        ionicMaterialMotion.fadeSlideInRight({
+            startVelocity: 3000
+        });
+    }, 700);
+    $timeout(function() {
         ionicMaterialMotion.blinds({
             startVelocity: 3000
         });
