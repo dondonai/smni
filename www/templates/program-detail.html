@@ -4,14 +4,15 @@
   The FriendsCtrl pulls data from the Friends service (service.js)
   The Friends service returns an array of friend data
 -->
-<ion-view view-title="{{program.name}}" align-title="center">
-  <ion-content ng-class="{expanded:$scope.isExpanded}">
-    <div class="hero slide-up stable-bg" style="background-image: url('{{program.img}}');">
-        <div class="content">
-            <!-- <div class="avatar" style="background-image: url('img/daenerys.jpg');"></div> -->
-            <h3><a class="light">{{program.name}}</a></h3>
-            <h4></h4>
-        </div>
+<ion-view view-title="{{program.name}}">
+  <ion-content>
+    <div class="hero slide-up" style="background-image: url('{{program.img}}');">
+    <!-- {{program.img}} -->
+      <div class="content">
+          <!-- <div class="avatar" style="background-image: url('img/daenerys.jpg');"></div> -->
+          <h3><a class="light">{{program.name}}</a></h3>
+          <h4></h4>
+      </div>
     </div>
 
 <!--     <div class="item item-body item-text-wrap item-assertive" ng-if="offline === true">
@@ -20,13 +21,16 @@
     </div> -->
 
     <!-- <img class="full-image" ng-src="{{program.img}}"> -->
-    <div class="list animate-fade-slide-in-right">
-      <a class="item item-avatar item-icon-right" ng-repeat="programItem in programItems" ui-sref="tab.video({ videoId: programItem.snippet.resourceId.videoId })">
-        <img ng-src="{{programItem.snippet.thumbnails.default.url}}">
-        <h2>{{programItem.snippet.title}}</h2>
-        <i class="icon ion-chattable"></i>
-      </a>
+    <div class="content">
+      <div class="list animate-fade-slide-in-right">
+        <a class="item item-avatar item-icon-right item-text-wrap ink" ng-repeat="programItem in programItems" ui-sref="tab.video({ videoId: programItem.snippet.resourceId.videoId })">
+          <img ng-src="{{programItem.snippet.thumbnails.default.url}}">
+          <h2>{{programItem.snippet.title}}</h2>
+          <i class="icon ion-chattable"></i>
+        </a>
+      </div>    
     </div>
+
 
   </ion-content>
 </ion-view>

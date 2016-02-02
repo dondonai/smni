@@ -1,26 +1,31 @@
 <ion-view view-title="SMNI Main">
-  <ion-content ng-class="{expanded:$scope.isExpanded}">
-    <div class="hero slide-up stable-bg" style="background-image: url('img/main-bg.jpg');">
+  <ion-content ng-class="{expanded:$scope.isExpanded}" scrollbar-y="false">
+    <div class="hero slide-up stable-bg animate-fade-slide-in-right" style="background-image: url('img/main-bg.jpg');">
         <div class="content">
             <!-- <div class="avatar" style="background-image: url('img/daenerys.jpg');"></div> -->
-            <!-- <h3><a class="assertive-900">Sonshine Media Network International</a></h3>
-            <h4></h4> -->
+            <!-- <div class="avatar" style="border: none;">
+                <button class="button button-stable button-fab"><i class="icon ion-play"></i></button>
+            </div> -->
+            <!-- <h3><a class="assertive-900">Sonshine Media Network International</a></h3> -->
+            <!-- <h4></h4> -->
+            <!-- <div class="buttons buttons-right header-item">
+                <span class="right-buttons" style="float: right;">
+                  <button class="button button-stable button-fab" ng-click="sourceRtmp()"><i class="icon ion-play"></i></button>  
+                </span>
+            </div> -->
         </div>
     </div>
-    <button class="button icon-left button-block button-stable" ng-click="sourceRtmp()">
-        <i class="icon ion-ios-play"></i> Launch Streaming
+    <button class="button button-raised button-block button-stable" ng-click="sourceRtmp()">
+        Launch Streaming
     </button>
-    <div class="content animate-fade-slide-in-right">
-        <!-- <div class="bar bar-header bar-stable">
-            <div class="h1 title title-center light">Facebook Updates</div>
-        </div> -->
-        <!-- <div class="padding-top"></div> -->
-        <!-- <h4 class="content padding double-padding-x">Facebook Updates</h4> -->
-        <div class="card" ng-repeat="feed in feeds">
-            <div class="item item-text-wrap item-stable stable-bg">
-                <p>{{feed.message}}</p>
-                <p ng-if="!feed.message">{{feed.story}}</p>
+    <div class="content">
+        <div class="card animate-fade-slide-in-right" ng-repeat="feed in feeds">
+            <div class="item item-text-wrap item-stable">
+                <div>{{feed.message}}</div>
+                <div ng-if="!feed.message">{{feed.story}}</div>
                 <div class="card-footer text-right">
+                    <button class="button button-clear button-small button-dark"><i class="icon ion-share positive"></i> Share</button>
+                    <!-- <i class="icon ion-heart assertive"></i> 4 -->
                     <div class="pull-left">
                         <i class="icon ion-clock"></i> {{feed.created_time | date}}
                     </div>

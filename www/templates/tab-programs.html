@@ -1,8 +1,8 @@
 <ion-view view-title="Programs">
-  <ion-content ng-class="{expanded:isExpanded}" class="animate-fade-slide-in">
+  <ion-content>
   <div class="list condensed-space no-padding animate-fade-slide-in-right">
         <div class="item item-card dark-bg condensed-space no-padding" ng-repeat="program in programs">
-            <a class="item clear-bg item-bg-image waves-effect waves-button waves-light has-mask-reverse" ui-sref="tab.program-detail({programId: program.playlistid})">
+            <a class="item clear-bg item-bg-image waves-effect waves-button waves-light has-mask-reverse ink" ui-sref="tab.program-detail({programId: program.playlistid})">
                 <h2>{{program.name}}</h2>
                 <!-- <p>Drake's Raptastic Raptors</p> -->
                 <img ng-src="{{program.img}}">

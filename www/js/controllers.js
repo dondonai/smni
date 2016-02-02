@@ -2,6 +2,8 @@ angular.module('smni.controllers', [])
 
 .controller('HomeCtrl', ['$scope', '$ionicPlatform', '$cordovaInAppBrowser', '$cordovaNetwork', '$ionicPopup', '$timeout', 'ionicMaterialMotion', 'ionicMaterialInk', 'FacebookFactory', function($scope, $ionicPlatform, $cordovaInAppBrowser, $cordovaNetwork, $ionicPopup, $timeout, ionicMaterialMotion, ionicMaterialInk, FacebookFactory) {
 
+    // ionic.material.ink.displayEffect();
+
   // $scope.init = function () {
   //   checkConnection();
   // }
@@ -82,6 +84,10 @@ angular.module('smni.controllers', [])
         ionicMaterialMotion.slideUp({
             selector: '.slide-up'
         });
+
+        ionicMaterialMotion.fadeSlideInRight({
+            startVelocity: 3000
+        });
     }, 300);
 
     $scope.facebookFeeds = function ( datePosted ) {
@@ -94,7 +100,10 @@ angular.module('smni.controllers', [])
             ionicMaterialMotion.fadeSlideInRight({
                 startVelocity: 3000
             });
-        });
+
+            ionicMaterialInk.displayEffect();
+        },300);
+
             
         }, function (err) {
             console.log( err );
@@ -106,7 +115,7 @@ angular.module('smni.controllers', [])
 
 
     // Set Ink
-    ionicMaterialInk.displayEffect();
+    // ionicMaterialInk.displayEffect();
 
 
 }])
@@ -114,48 +123,49 @@ angular.module('smni.controllers', [])
 .controller('ProgramsCtrl', ['$scope', '$stateParams', 'ProgramListFactory', '$timeout', 'ionicMaterialMotion', 'ionicMaterialInk', function($scope, $stateParams, ProgramListFactory, $timeout, ionicMaterialMotion, ionicMaterialInk) {
 
     $scope.programs = ProgramListFactory.all();
-    console.log($scope.programs);
+    // console.log($scope.programs);
 
     // Set Motion
-    $timeout(function() {
-        ionicMaterialMotion.slideUp({
-            selector: '.slide-up'
-        });
-    }, 300);
-
     $timeout(function() {
         ionicMaterialMotion.fadeSlideInRight({
             startVelocity: 3000
         });
+        
+        ionicMaterialInk.displayEffect();
+
     }, 700);
+
     $timeout(function() {
         ionicMaterialMotion.blinds({
             startVelocity: 3000
         });
     }, 700);
 
-    // Set Ink
-    ionicMaterialInk.displayEffect();
-
-    $scope.isExpanded = true;
-
-
 }])
 
 .controller('ProgramDetailCtrl', ['$scope', '$stateParams', 'ProgramsFactory', 'ProgramListFactory', '$ionicLoading', '$cordovaNetwork', '$ionicPopup', '$timeout', 'ionicMaterialMotion', 'ionicMaterialInk', function($scope, $stateParams, ProgramsFactory, ProgramListFactory, $ionicLoading, $cordovaNetwork, $ionicPopup, $timeout, ionicMaterialMotion, ionicMaterialInk) {
 
-    // $scope.program = ProgramListFactory.get( $stateParams.programId );
+    // console.log( '$stateParams.programId: ' + $stateParams.programId );
 
     $scope.init = function() {
-        var isOnline = $cordovaNetwork.isOnline()
-        if (isOnline === true) {
+        // var isOnline = $cordovaNetwork.isOnline()
+        // if (isOnline === true) {
             $scope.programItem();
-        } else {
-            $scope.isOffline();
-        }
+        // } else {
+            // $scope.isOffline();
+        // }
+
+        $scope.program = ProgramListFactory.get( $stateParams.programId );
+        $scope.programTitle();
     }
 
     var playlistId = $stateParams.programId;
+
+    $scope.programTitle = function () {
+        $scope.program = ProgramListFactory.get( $stateParams.programId );
+
+        console.log( $scope.program );
+    }
 
     $scope.programItem = function() {
         var params = {
@@ -171,6 +181,23 @@ angular.module('smni.controllers', [])
                 $ionicLoading.hide();
                 $scope.programItems = res.items;
                 console.log($scope.programItems);
+
+                // Set Motion
+                $timeout(function() {
+                    ionicMaterialMotion.slideUp({
+                        selector: '.slide-up'
+                    });
+                }, 300);
+
+                $timeout(function() {
+                    ionicMaterialMotion.fadeSlideInRight({
+                        startVelocity: 3000
+                    });
+                }, 700);
+
+                $timeout( function() {
+                    ionicMaterialInk.displayEffect();
+                }, 700);
 
             }, function(err) {
                 console.log(err);
@@ -188,32 +215,13 @@ angular.module('smni.controllers', [])
             $ionicLoading.hide();
         })
     }
-
-    $scope.program = ProgramListFactory.get($stateParams.programId);
+    
+    // $scope.program = ProgramListFactory.get($stateParams.programId);
 
     $scope.init();
 
-    $timeout(function() {
-        ionicMaterialMotion.fadeSlideIn({
-            startVelocity: 3000
-        });
-    }, 700);
 
-    // Set Motion
-    $timeout(function() {
-        ionicMaterialMotion.slideUp({
-            selector: '.slide-up'
-        });
-    }, 300);
-
-    $timeout(function() {
-        ionicMaterialMotion.fadeSlideInRight({
-            startVelocity: 3000
-        });
-    }, 700);
-
-    // Set Ink
-    ionicMaterialInk.displayEffect();
+    // $scope.isExpanded = true;
 
 }])
 
