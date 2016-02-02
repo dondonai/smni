@@ -1,6 +1,6 @@
 angular.module('smni.controllers', [])
 
-.controller('HomeCtrl', ['$scope', '$ionicPlatform', '$cordovaInAppBrowser', '$cordovaNetwork', '$ionicPopup', '$timeout', 'ionicMaterialMotion', 'ionicMaterialInk', 'FacebookFactory', function($scope, $ionicPlatform, $cordovaInAppBrowser, $cordovaNetwork, $ionicPopup, $timeout, ionicMaterialMotion, ionicMaterialInk, FacebookFactory) {
+.controller('HomeCtrl', ['$scope', '$ionicPlatform', '$cordovaInAppBrowser', '$cordovaNetwork', '$ionicPopup', '$timeout', 'ionicMaterialMotion', 'ionicMaterialInk', 'FacebookFactory', '$cordovaSocialSharing', function($scope, $ionicPlatform, $cordovaInAppBrowser, $cordovaNetwork, $ionicPopup, $timeout, ionicMaterialMotion, ionicMaterialInk, FacebookFactory, $cordovaSocialSharing) {
 
     // ionic.material.ink.displayEffect();
 
@@ -113,6 +113,15 @@ angular.module('smni.controllers', [])
 
     $ionicPlatform.ready( $scope.facebookFeeds() );
 
+    $scope.shareAnywhere = function( message, image, url ) {
+        $cordovaSocialSharing.share( message, image, url)
+            .then( function (res) {
+                console.log( res );
+            }, function (err) {
+                console.log( err );
+            });
+    }
+
 
     // Set Ink
     // ionicMaterialInk.displayEffect();
@@ -133,7 +142,7 @@ angular.module('smni.controllers', [])
         
         ionicMaterialInk.displayEffect();
 
-    }, 700);
+    }, 300);
 
     $timeout(function() {
         ionicMaterialMotion.blinds({
@@ -193,7 +202,7 @@ angular.module('smni.controllers', [])
                     ionicMaterialMotion.fadeSlideInRight({
                         startVelocity: 3000
                     });
-                }, 700);
+                }, 300);
 
                 $timeout( function() {
                     ionicMaterialInk.displayEffect();
@@ -312,6 +321,10 @@ angular.module('smni.controllers', [])
     //         selector: '.slide-up'
     //     });
     // }, 300);
+    
+    $timeout( function () {
+        ionicMaterialInk.displayEffect();
+    }, 300);
 
     $scope.$on('$ionicView.enter', function (e) {
     });
