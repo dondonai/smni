@@ -1,10 +1,13 @@
 <ion-view view-title="Programs">
   <ion-content>
-    <div>
-      <div class="one-half" ng-repeat="program in programs" ui-sref="tab.program-detail({programId: program.playlistid})">
-        <img class="full-image" ng-src="{{program.img}}">
-        <!-- <h2>{{program.name}}</h2> -->
-      </div>
+  <div class="list condensed-space no-padding animate-fade-slide-in-right">
+        <div class="item item-card dark-bg condensed-space no-padding" ng-repeat="program in programs">
+            <a class="item clear-bg item-bg-image waves-effect waves-button waves-light has-mask-reverse ink" ui-sref="tab.program-detail({programId: program.playlistid})">
+                <h2>{{program.name}}</h2>
+                <!-- <p>Drake's Raptastic Raptors</p> -->
+                <img ng-src="{{program.img}}">
+            </a>
+        </div>
     </div>
   </ion-content>
 </ion-view>

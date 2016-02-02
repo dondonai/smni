@@ -1,8 +1,10 @@
 {
-  "name": "HelloIonic",
+  "name": "SMNI App",
   "private": "true",
   "devDependencies": {
-    "ionic": "driftyco/ionic-bower#1.2.4"
+    "ionic": "driftyco/ionic-bower#1.0.0-rc.2",
+    "ionic-material": "0.4.2",
+    "ion-md-input": "1.0.4"
   },
   "dependencies": {
     "angular-resource": "~1.4.8"

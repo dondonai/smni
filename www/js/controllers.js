@@ -1,6 +1,8 @@
 angular.module('smni.controllers', [])
 
-.controller('HomeCtrl', ['$scope', '$cordovaInAppBrowser', '$cordovaNetwork', '$ionicPopup', '$timeout', function($scope, $cordovaInAppBrowser, $cordovaNetwork, $ionicPopup, $timeout) {
+.controller('HomeCtrl', ['$scope', '$ionicPlatform', '$cordovaInAppBrowser', '$cordovaNetwork', '$ionicPopup', '$timeout', 'ionicMaterialMotion', 'ionicMaterialInk', 'FacebookFactory', '$cordovaSocialSharing', function($scope, $ionicPlatform, $cordovaInAppBrowser, $cordovaNetwork, $ionicPopup, $timeout, ionicMaterialMotion, ionicMaterialInk, FacebookFactory, $cordovaSocialSharing) {
+
+    // ionic.material.ink.displayEffect();
 
   // $scope.init = function () {
   //   checkConnection();
@@ -76,34 +78,103 @@ angular.module('smni.controllers', [])
     $scope.sourceHTTP2 = function() {
         $cordovaInAppBrowser.open('http://smni.live-s.cdn.bitgravity.com/cdn-live/_definst_/smni/live/feed001/playlist.m3u8?width=490&height=350&streamType=live&AutoPlay=true&ScrubMode=simple&BufferTime=1.5&AutoBitrate=off&scaleMode=letterbox&DefaultRatio=1.777778&LogoPosition=topleft&ColorBase=0&ColorControl=14277081&ColorHighlight=16777215&ColorFeature=14277081&selectedIndex=0', '_system', options);
     }
+    
+    // Set Motion
+    $timeout(function() {
+        ionicMaterialMotion.slideUp({
+            selector: '.slide-up'
+        });
 
+        ionicMaterialMotion.fadeSlideInRight({
+            startVelocity: 3000
+        });
+    }, 300);
+
+    $scope.facebookFeeds = function ( datePosted ) {
+        FacebookFactory.get()
+        .$promise.then( function (res) {
+            $scope.feeds = res.data;
+            console.log( res.data );
+
+        $timeout( function () {
+            ionicMaterialMotion.fadeSlideInRight({
+                startVelocity: 3000
+            });
+
+            ionicMaterialInk.displayEffect();
+        },300);
+
+            
+        }, function (err) {
+            console.log( err );
+        });
+
+    };
+
+    $ionicPlatform.ready( $scope.facebookFeeds() );
+
+    $scope.shareAnywhere = function( message, image, url ) {
+        $cordovaSocialSharing.share( message, image, url)
+            .then( function (res) {
+                console.log( res );
+            }, function (err) {
+                console.log( err );
+            });
+    }
+
+
+    // Set Ink
+    // ionicMaterialInk.displayEffect();
 
 
 }])
 
-.controller('ProgramsCtrl', ['$scope', '$stateParams', 'ProgramListFactory', function($scope, $stateParams, ProgramListFactory) {
+.controller('ProgramsCtrl', ['$scope', '$stateParams', 'ProgramListFactory', '$timeout', 'ionicMaterialMotion', 'ionicMaterialInk', function($scope, $stateParams, ProgramListFactory, $timeout, ionicMaterialMotion, ionicMaterialInk) {
 
     $scope.programs = ProgramListFactory.all();
-    console.log($scope.programs);
+    // console.log($scope.programs);
 
+    // Set Motion
+    $timeout(function() {
+        ionicMaterialMotion.fadeSlideInRight({
+            startVelocity: 3000
+        });
+        
+        ionicMaterialInk.displayEffect();
+
+    }, 300);
+
+    $timeout(function() {
+        ionicMaterialMotion.blinds({
+            startVelocity: 3000
+        });
+    }, 700);
 
 }])
 
-.controller('ProgramDetailCtrl', ['$scope', '$stateParams', 'ProgramsFactory', 'ProgramListFactory', '$ionicLoading', '$cordovaNetwork', '$ionicPopup', function($scope, $stateParams, ProgramsFactory, ProgramListFactory, $ionicLoading, $cordovaNetwork, $ionicPopup) {
+.controller('ProgramDetailCtrl', ['$scope', '$stateParams', 'ProgramsFactory', 'ProgramListFactory', '$ionicLoading', '$cordovaNetwork', '$ionicPopup', '$timeout', 'ionicMaterialMotion', 'ionicMaterialInk', function($scope, $stateParams, ProgramsFactory, ProgramListFactory, $ionicLoading, $cordovaNetwork, $ionicPopup, $timeout, ionicMaterialMotion, ionicMaterialInk) {
 
-    // $scope.program = ProgramListFactory.get( $stateParams.programId );
-
+    // console.log( '$stateParams.programId: ' + $stateParams.programId );
 
     $scope.init = function() {
-        var isOnline = $cordovaNetwork.isOnline()
-        if (isOnline === true) {
+        // var isOnline = $cordovaNetwork.isOnline()
+        // if (isOnline === true) {
             $scope.programItem();
-        } else {
-            $scope.isOffline();
-        }
+        // } else {
+            // $scope.isOffline();
+        // }
+
+        $scope.program = ProgramListFactory.get( $stateParams.programId );
+        $scope.programTitle();
     }
 
     var playlistId = $stateParams.programId;
+
+    $scope.programTitle = function () {
+        $scope.program = ProgramListFactory.get( $stateParams.programId );
+
+        console.log( $scope.program );
+    }
 
     $scope.programItem = function() {
         var params = {
@@ -119,6 +190,23 @@ angular.module('smni.controllers', [])
                 $ionicLoading.hide();
                 $scope.programItems = res.items;
                 console.log($scope.programItems);
+
+                // Set Motion
+                $timeout(function() {
+                    ionicMaterialMotion.slideUp({
+                        selector: '.slide-up'
+                    });
+                }, 300);
+
+                $timeout(function() {
+                    ionicMaterialMotion.fadeSlideInRight({
+                        startVelocity: 3000
+                    });
+                }, 300);
+
+                $timeout( function() {
+                    ionicMaterialInk.displayEffect();
+                }, 700);
 
             }, function(err) {
                 console.log(err);
@@ -136,10 +224,13 @@ angular.module('smni.controllers', [])
             $ionicLoading.hide();
         })
     }
-
-    $scope.program = ProgramListFactory.get($stateParams.programId);
+    
+    // $scope.program = ProgramListFactory.get($stateParams.programId);
 
     $scope.init();
+
+
+    // $scope.isExpanded = true;
 
 }])
 
@@ -211,7 +302,7 @@ angular.module('smni.controllers', [])
 
 }])
 
-.controller('AboutCtrl', ['$scope', '$cordovaInAppBrowser', function ($scope, $cordovaInAppBrowser) {
+.controller('AboutCtrl', ['$scope', '$stateParams', '$timeout', '$cordovaInAppBrowser', 'ionicMaterialInk', 'ionicMaterialMotion', function ($scope, $stateParams, $timeout, $cordovaInAppBrowser, ionicMaterialInk, ionicMaterialMotion ) {
     
     var options = {
         location: 'no',
@@ -219,9 +310,26 @@ angular.module('smni.controllers', [])
         toolbar: 'no'
     };
 
+    var loaded = false;
+
     $scope.like = function () {
         $cordovaInAppBrowser.open('https://www.facebook.com/SMNIApp/', '_blank', options);
     };
+
+    // $timeout(function() {
+    //     ionicMaterialMotion.slideUp({
+    //         selector: '.slide-up'
+    //     });
+    // }, 300);
+    
+    $timeout( function () {
+        ionicMaterialInk.displayEffect();
+    }, 300);
+
+    $scope.$on('$ionicView.enter', function (e) {
+    });
+
+
 }])
 
 .controller('ChatsCtrl', function($scope, Chats) {

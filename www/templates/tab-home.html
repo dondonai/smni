@@ -1,33 +1,39 @@
 <ion-view view-title="SMNI Main">
-  
-  <ion-content class="padding-horizontal">
-  <ion-refresher
-    pulling-text="Pull to refresh..."
-    on-refresh="checkConnection()">
-  </ion-refresher>
-  <div class="padding-top">
-    <div class="item item-text-wrap item-assertive" ng-if="connected === false"><i class="icon ion-ios-close-outline"></i> No internet connection</div>
-  </div>
-    <div class="card padding-top">
-      
-      <div class="item item-image">
-        <img ng-src="img/logo.png">
-      </div>
-      
-      <div class="padding">
-        <a class="button icon-left button-block button-stable" href="#" ng-click="sourceRtmp()">
-            <i class="icon ion-ios-play"></i> Launch Streaming
-        </a>
-      </div>
-
+  <ion-content ng-class="{expanded:$scope.isExpanded}" scrollbar-y="false">
+    <div class="hero slide-up stable-bg animate-fade-slide-in-right" style="background-image: url('img/main-bg.jpg');">
+        <div class="content">
+            <!-- <div class="avatar" style="background-image: url('img/daenerys.jpg');"></div> -->
+            <!-- <div class="avatar" style="border: none;">
+                <button class="button button-stable button-fab"><i class="icon ion-play"></i></button>
+            </div> -->
+            <!-- <h3><a class="assertive-900">Sonshine Media Network International</a></h3> -->
+            <!-- <h4></h4> -->
+            <!-- <div class="buttons buttons-right header-item">
+                <span class="right-buttons" style="float: right;">
+                  <button class="button button-stable button-fab" ng-click="sourceRtmp()"><i class="icon ion-play"></i></button>  
+                </span>
+            </div> -->
+        </div>
     </div>
-    <div class="card">
-      <div class="item item-text-wrap">
-        <div class="item item-divider item-assertive"><i  class="icon ion-alert-circled"></i> Important notice</div>
-        <div class="padding">Due to some issues regarding with streaming we removed the second option and focus to the option that works best for many of the users. We politely advice that users should install a third-party video player to have a better experience using the app. For any questions please send us an email regarding your concern(s) and we will do our best to attend to it asap.</div>
-      </div>
+    <div>
+        <button class="button button-raised button-block button-stable" ng-click="sourceRtmp()">
+            Launch Streaming
+        </button>
     </div>
-
-    <div class="padding"></div>
+    <div class="content">
+        <div class="card animate-fade-slide-in-right" ng-repeat="feed in feeds">
+            <div class="item item-text-wrap item-stable">
+                <div>{{feed.message}}</div>
+                <div ng-if="!feed.message">{{feed.story}}</div>
+                <div class="card-footer text-right">
+                    <button class="button button-clear button-small button-dark" ng-click="shareAnywhere( {{feed.message}}, {{feed.img}}, 'https://www.facebook.com/' + {{feed.id}} )"><i class="icon ion-share positive"></i> Share</button>
+                    <!-- <i class="icon ion-heart assertive"></i> 4 -->
+                    <div class="pull-left">
+                        <i class="icon ion-clock"></i> {{feed.created_time | date}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
   </ion-content>
 </ion-view>
