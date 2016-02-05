@@ -26,7 +26,9 @@
                 <div>{{feed.message}}</div>
                 <div ng-if="!feed.message">{{feed.story}}</div>
                 <div class="card-footer text-right">
-                    <button class="button button-clear button-small button-dark" ng-click="shareAnywhere( {{feed.message}}, {{feed.img}}, 'https://www.facebook.com/' + {{feed.id}} )"><i class="icon ion-share positive"></i> Share</button>
+                    <button class="button button-clear button-small button-dark" ng-click="share('{{feed.message}}', null, 'https://www.facebook.com/')"><i class="icon ion-android-share-alt positive"></i></button>
+                    <button class="button button-clear button-small button-dark" ng-click="openLink('{{feed.id}}')"><i class="icon ion-android-share-alt positive"></i></button>
+                    <!-- <a href="https://www.facebook.com/{{feed.id}}" target="_blank" class="button button-clear button-clear"><i class="icon ion-share positive"></i></a> -->
                     <!-- <i class="icon ion-heart assertive"></i> 4 -->
                     <div class="pull-left">
                         <i class="icon ion-clock"></i> {{feed.created_time | date}}
