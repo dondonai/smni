@@ -91,10 +91,33 @@ angular.module('smni.controllers', [])
     }, 300);
 
     $scope.facebookFeeds = function ( datePosted ) {
+    var fbLinks = [];
         FacebookFactory.get()
         .$promise.then( function (res) {
             $scope.feeds = res.data;
-            console.log( res.data );
+            // $scope.fbLink = "https://www.facebook.com/" + res.data.id;
+            // console.log( res.data.length );
+            // $scope.fbLink = res.data[]
+            
+            for (var i = 0; i < res.data.length; i++) {
+                // if (programs[i].playlistid === programId) {
+                    var fbLink = "https://www.facebook.com/" + res.data[i].id;
+                    fbLinks.push(fbLink);
+                    // console.log( fbLink );
+                    // return programs[i];
+                // }
+            }
+
+            // $scope.fbLink = [fbLink];
+            // $scope.fbLink.toString();
+
+            console.log( fbLinks );
+
+            $scope.fbLinked = fbLinks;
+
+            // $scope.theLinks = fbLinks.toString();
+            // console.log( $scope.theLinks );
+
 
         $timeout( function () {
             ionicMaterialMotion.fadeSlideInRight({
@@ -109,12 +132,17 @@ angular.module('smni.controllers', [])
             console.log( err );
         });
 
+
     };
 
-    $ionicPlatform.ready( $scope.facebookFeeds() );
+    $scope.openLink = function ( theId ) {
+        // console.log( id );
+        $cordovaInAppBrowser.open( "https://www.facebook.com/" + theId, '_blank', options );
+    }
 
-    $scope.shareAnywhere = function( message, image, url ) {
-        $cordovaSocialSharing.share( message, image, url)
+    $scope.share = function( message, image, url ) {
+        $cordovaSocialSharing
+            .share( message, image, url)
             .then( function (res) {
                 console.log( res );
             }, function (err) {
@@ -122,6 +150,39 @@ angular.module('smni.controllers', [])
             });
     }
 
+    $scope.shareViaTwitter = function (msg, img, url) {
+        $cordovaSocialSharing.shareViaTwitter( msg, null, url );
+    }
+    $scope.shareViaGooglePlus = function (msg, img, url) {
+        $cordovaSocialSharing.shareVia( 'com.google.android.apps.plus', msg, null, url );
+    }
+
+    $scope.shareViaWhatsApp = function (msg, img, url) {
+        $cordovaSocialSharing.shareViaWhatsApp( msg, null, url, function() {console.log('share ok')}, function(errormsg){alert(errormsg)} );
+    }
+
+    $scope.shareViaEmail = function (msg) {
+        $cordovaSocialSharing.shareViaEmail( 
+            msg,
+            '',
+            null,
+            null,
+            null,
+            function(msg) {
+                // success
+            },
+            function(err) {
+                // error
+            }
+            );
+    }
+
+    $scope.shareViaSMS = function (msg) {
+        $cordovaSocialSharing.shareViaSMS( msg, null, function(msg) {console.log('ok: ' + msg)}, function(msg) {alert('error: ' + msg)} );
+    }
+
+
+    $ionicPlatform.ready( $scope.facebookFeeds() );
 
     // Set Ink
     // ionicMaterialInk.displayEffect();
