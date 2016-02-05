@@ -16,24 +16,34 @@
         </div>
     </div>
     <div>
-        <button class="button button-raised button-block button-stable" ng-click="sourceRtmp()">
+        <button class="button button-raised button-block button-stable" data-ink-color="#4dc247" data-ink-opacity="0.8" ng-click="sourceRtmp()">
             Launch Streaming
         </button>
     </div>
-    <div class="content">
-        <div class="card animate-fade-slide-in-right" ng-repeat="feed in feeds">
-            <div class="item item-text-wrap item-stable">
-                <div>{{feed.message}}</div>
-                <div ng-if="!feed.message">{{feed.story}}</div>
-                <div class="card-footer text-right">
-                    <button class="button button-clear button-small button-dark" ng-click="share('{{feed.message}}', null, 'https://www.facebook.com/')"><i class="icon ion-android-share-alt positive"></i></button>
-                    <button class="button button-clear button-small button-dark" ng-click="openLink('{{feed.id}}')"><i class="icon ion-android-share-alt positive"></i></button>
-                    <!-- <a href="https://www.facebook.com/{{feed.id}}" target="_blank" class="button button-clear button-clear"><i class="icon ion-share positive"></i></a> -->
-                    <!-- <i class="icon ion-heart assertive"></i> 4 -->
-                    <div class="pull-left">
-                        <i class="icon ion-clock"></i> {{feed.created_time | date}}
-                    </div>
-                </div>
+    <div class="content feeds">
+        <div class="list card animate-fade-slide-in-right" ng-repeat="feed in feeds">
+            <div class="item item-body item-text-wrap item-stable">
+                <div ng-show="feed.message">{{feed.message}}</div>
+                <div ng-show="!feed.message">{{feed.story}}</div>
+                <p><a class="subdued">{{feed.created_time | date}}</a></p>
+            </div>
+
+            <div ng-show="feed.message" class="item tabs tabs-secondary">
+                <a class="tab-item" data-ink-color="#00aced" data-ink-opacity="0.8" ng-click="shareViaTwitter('{{feed.message}}', null, 'https://www.facebook.com/{{feed.id}}')"><i class="icon ion-social-twitter"></i></a>
+                <a class="tab-item" data-ink-color="#dd4b39" data-ink-opacity="0.8" ng-click="shareViaGooglePlus('{{feed.message}}', null, 'https://www.facebook.com/{{feed.id}}')"><i class="icon ion-social-googleplus"></i></a>
+                <a ng-show="feed.message" class="tab-item" data-ink-color="#4dc247" data-ink-opacity="0.8" ng-click="shareViaWhatsApp('{{feed.message}}', null, 'https://www.facebook.com/{{feed.id}}')"><i class="icon ion-social-whatsapp"></i></a>
+                <a class="tab-item" data-ink-color="#336699" data-ink-opacity="0.8" ng-click="shareViaEmail('{{feed.message}}')"><i class="icon ion-android-mail"></i></a>
+                <a class="tab-item" data-ink-color="#336699" data-ink-opacity="0.8" ng-click="shareViaSMS('{{feed.message}}')"><i class="icon ion-android-textsms"></i></a>
+                <a class="tab-item" data-ink-color="#336699" data-ink-opacity="0.8" ng-click="openLink('{{feed.id}}')"><i class="icon ion-android-open"></i></a>
+            </div>
+
+            <div ng-show="!feed.message" class="item tabs tabs-secondary">
+                <a class="tab-item" data-ink-color="#00aced" data-ink-opacity="0.8" ng-click="shareViaTwitter('{{feed.story}}', null, 'https://www.facebook.com/{{feed.id}}')"><i class="icon ion-social-twitter"></i></a>
+                <a class="tab-item" data-ink-color="#dd4b39" data-ink-opacity="0.8" ng-click="shareViaGooglePlus('{{feed.story}}', null, 'https://www.facebook.com/{{feed.id}}')"><i class="icon ion-social-googleplus"></i></a>
+                <a ng-show="feed.story" class="tab-item" data-ink-color="#4dc247" data-ink-opacity="0.8" ng-click="shareViaWhatsApp('{{feed.story}}', null, 'https://www.facebook.com/{{feed.id}}')"><i class="icon ion-social-whatsapp"></i></a>
+                <a class="tab-item" data-ink-color="#336699" data-ink-opacity="0.8" ng-click="shareViaEmail('{{feed.story}}')"><i class="icon ion-android-mail"></i></a>
+                <a class="tab-item" data-ink-color="#336699" data-ink-opacity="0.8" ng-click="shareViaSMS('{{feed.story}}')"><i class="icon ion-android-textsms"></i></a>
+                <a class="tab-item" data-ink-color="#336699" data-ink-opacity="0.8" ng-click="openLink('{{feed.id}}')"><i class="icon ion-android-open"></i></a>
             </div>
         </div>
     </div>

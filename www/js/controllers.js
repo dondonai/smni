@@ -150,6 +150,38 @@ angular.module('smni.controllers', [])
             });
     }
 
+    $scope.shareViaTwitter = function (msg, img, url) {
+        $cordovaSocialSharing.shareViaTwitter( msg, null, url );
+    }
+    $scope.shareViaGooglePlus = function (msg, img, url) {
+        $cordovaSocialSharing.shareVia( 'com.google.android.apps.plus', msg, null, url );
+    }
+
+    $scope.shareViaWhatsApp = function (msg, img, url) {
+        $cordovaSocialSharing.shareViaWhatsApp( msg, null, url, function() {console.log('share ok')}, function(errormsg){alert(errormsg)} );
+    }
+
+    $scope.shareViaEmail = function (msg) {
+        $cordovaSocialSharing.shareViaEmail( 
+            msg,
+            '',
+            null,
+            null,
+            null,
+            function(msg) {
+                // success
+            },
+            function(err) {
+                // error
+            }
+            );
+    }
+
+    $scope.shareViaSMS = function (msg) {
+        $cordovaSocialSharing.shareViaSMS( msg, null, function(msg) {console.log('ok: ' + msg)}, function(msg) {alert('error: ' + msg)} );
+    }
+
+
     $ionicPlatform.ready( $scope.facebookFeeds() );
 
     // Set Ink

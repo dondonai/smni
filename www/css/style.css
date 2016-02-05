@@ -21,3 +21,11 @@
     height: 100%;
     border: 0;
 }
+.feeds .tab-item .icon {
+    font-size: 24px;
+}
+.list .item.item-divider {
+    border-bottom: 1px solid #333;
+    font-size: 20px;
+    text-transform: uppercase;
+}
