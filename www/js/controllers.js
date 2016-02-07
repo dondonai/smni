@@ -17,7 +17,7 @@ angular.module('smni.controllers', [])
 
   // Check internet connection
 
-    $scope.isExpanded = false;
+    $scope.isExpanded = true;
     $scope.hasHeaderFabLeft = false;
     $scope.hasHeaderFabRight = false;
 
