@@ -16,6 +16,11 @@ angular.module('smni.controllers', [])
   // document.addEventListener("deviceready", $scope.checkConnection, false);
 
   // Check internet connection
+
+    $scope.isExpanded = false;
+    $scope.hasHeaderFabLeft = false;
+    $scope.hasHeaderFabRight = false;
+
   $scope.checkConnection = function () {
 
     var type = $cordovaNetwork.getNetwork()
