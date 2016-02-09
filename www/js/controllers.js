@@ -23,9 +23,9 @@ angular.module('smni.controllers', [])
 
   $scope.checkConnection = function () {
 
-    var type = $cordovaNetwork.getNetwork()
-    var isOnline = $cordovaNetwork.isOnline()
-    var isOffline = $cordovaNetwork.isOffline()
+    var type = $cordovaNetwork.getNetwork();
+    var isOnline = $cordovaNetwork.isOnline();
+    var isOffline = $cordovaNetwork.isOffline();
     var connected;
 
     // alert( 'You are connected via ' + type );
@@ -45,7 +45,7 @@ angular.module('smni.controllers', [])
       $scope.connectionStatus = "Online";
     }
 
-    $scope.$broadcast('scroll.refreshComplete');
+    // $scope.$broadcast('scroll.refreshComplete');
   }
 
   $scope.$on('$cordovaNetwork:online', function(event, networkState) {
@@ -54,16 +54,21 @@ angular.module('smni.controllers', [])
       $ionicPopup.alert({
         title: "Internet Connected",
         content: 'You are now connected to the internet!'
-      })
+      });
   })
 
-  $scope.$on('$cordovaNetwork:offline', function(event, networkState) {
-    var onlineState = networkState;
-    $ionicPopup.alert({
-      title: "Internet disconnected",
-      content: 'You are now offline.'
-    })
-  })
+  $timeout( function() {
+      $scope.$on('$cordovaNetwork:offline', function(event, networkState) {
+        var onlineState = networkState;
+        $ionicPopup.alert({
+          title: "No Internet Connection",
+          content: 'You are not connected to the internet. <br>Click ok to close the app.'
+        }).then( function () {
+            ionic.Platform.exitApp();
+        });
+
+      });
+  }, 700);
 
   // checkConnection();
   // $scope.init();
@@ -77,67 +82,37 @@ angular.module('smni.controllers', [])
     $scope.sourceRtmp = function() {
         $cordovaInAppBrowser.open('rtmp://smni.live-s.cdn.bitgravity.com/cdn-live/_definst_/smni/live/feed001', '_system', options);
     }
-    $scope.sourceHTTP = function() {
-        $cordovaInAppBrowser.open('http://smni.live-s.cdn.bitgravity.com:1935/content:cdn-live/smni/live/feed001', '_system', options);
-    }
-    $scope.sourceHTTP2 = function() {
-        $cordovaInAppBrowser.open('http://smni.live-s.cdn.bitgravity.com/cdn-live/_definst_/smni/live/feed001/playlist.m3u8?width=490&height=350&streamType=live&AutoPlay=true&ScrubMode=simple&BufferTime=1.5&AutoBitrate=off&scaleMode=letterbox&DefaultRatio=1.777778&LogoPosition=topleft&ColorBase=0&ColorControl=14277081&ColorHighlight=16777215&ColorFeature=14277081&selectedIndex=0', '_system', options);
-    }
+    // $scope.sourceHTTP = function() {
+    //     $cordovaInAppBrowser.open('http://smni.live-s.cdn.bitgravity.com:1935/content:cdn-live/smni/live/feed001', '_system', options);
+    // }
+    // $scope.sourceHTTP2 = function() {
+    //     $cordovaInAppBrowser.open('http://smni.live-s.cdn.bitgravity.com/cdn-live/_definst_/smni/live/feed001/playlist.m3u8?width=490&height=350&streamType=live&AutoPlay=true&ScrubMode=simple&BufferTime=1.5&AutoBitrate=off&scaleMode=letterbox&DefaultRatio=1.777778&LogoPosition=topleft&ColorBase=0&ColorControl=14277081&ColorHighlight=16777215&ColorFeature=14277081&selectedIndex=0', '_system', options);
+    // }
     
     // Set Motion
     $timeout(function() {
         ionicMaterialMotion.slideUp({
             selector: '.slide-up'
         });
-
-        ionicMaterialMotion.fadeSlideInRight({
-            startVelocity: 3000
-        });
     }, 300);
 
-    $scope.facebookFeeds = function ( datePosted ) {
-    var fbLinks = [];
+    $scope.facebookFeeds = function () {
+
         FacebookFactory.get()
         .$promise.then( function (res) {
             $scope.feeds = res.data;
-            // $scope.fbLink = "https://www.facebook.com/" + res.data.id;
-            // console.log( res.data.length );
-            // $scope.fbLink = res.data[]
-            
-            for (var i = 0; i < res.data.length; i++) {
-                // if (programs[i].playlistid === programId) {
-                    var fbLink = "https://www.facebook.com/" + res.data[i].id;
-                    fbLinks.push(fbLink);
-                    // console.log( fbLink );
-                    // return programs[i];
-                // }
-            }
 
-            // $scope.fbLink = [fbLink];
-            // $scope.fbLink.toString();
+            $timeout( function () {
+                ionicMaterialMotion.fadeSlideInRight({
+                    startVelocity: 3000
+                });
 
-            console.log( fbLinks );
-
-            $scope.fbLinked = fbLinks;
-
-            // $scope.theLinks = fbLinks.toString();
-            // console.log( $scope.theLinks );
-
-
-        $timeout( function () {
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 3000
-            });
-
-            ionicMaterialInk.displayEffect();
-        },300);
-
-            
+                ionicMaterialInk.displayEffect();
+            }, 1000);
+ 
         }, function (err) {
             console.log( err );
         });
-
-
     };
 
     $scope.openLink = function ( theId ) {
@@ -195,7 +170,12 @@ angular.module('smni.controllers', [])
 
 }])
 
-.controller('ProgramsCtrl', ['$scope', '$stateParams', 'ProgramListFactory', '$timeout', 'ionicMaterialMotion', 'ionicMaterialInk', function($scope, $stateParams, ProgramListFactory, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+.controller('ProgramsCtrl', ['$scope', '$stateParams', 'ProgramListFactory', '$timeout', 'ionicMaterialMotion', 'ionicMaterialInk', '$cordovaNetwork', function($scope, $stateParams, ProgramListFactory, $timeout, ionicMaterialMotion, ionicMaterialInk, $cordovaNetwork) {
+
+    var isOffline = $cordovaNetwork.isOffline();
+    $scope.offline = function () {
+        $scope.isNowOffline = true;
+    }
 
     $scope.programs = ProgramListFactory.all();
     // console.log($scope.programs);
@@ -223,12 +203,12 @@ angular.module('smni.controllers', [])
     // console.log( '$stateParams.programId: ' + $stateParams.programId );
 
     $scope.init = function() {
-        // var isOnline = $cordovaNetwork.isOnline()
-        // if (isOnline === true) {
+        var isOnline = $cordovaNetwork.isOnline();
+        if (isOnline === true) {
             $scope.programItem();
-        // } else {
-            // $scope.isOffline();
-        // }
+        } else {
+            $scope.isOffline();
+        }
 
         $scope.program = ProgramListFactory.get( $stateParams.programId );
         $scope.programTitle();
@@ -238,8 +218,7 @@ angular.module('smni.controllers', [])
 
     $scope.programTitle = function () {
         $scope.program = ProgramListFactory.get( $stateParams.programId );
-
-        console.log( $scope.program );
+        // console.log( $scope.program );
     }
 
     $scope.programItem = function() {
@@ -249,7 +228,7 @@ angular.module('smni.controllers', [])
             playlistId: playlistId
         }
 
-        $ionicLoading.show();
+        // $ionicLoading.show();
 
         ProgramsFactory.get(params)
             .$promise.then(function(res) {
@@ -288,15 +267,18 @@ angular.module('smni.controllers', [])
         }).then(function() {
             $scope.offline = true;
             $ionicLoading.hide();
-        })
+        });
+
+        $timeout(function() {
+            ionicMaterialMotion.slideUp({
+                selector: '.slide-up'
+            });
+        }, 300);
     }
     
     // $scope.program = ProgramListFactory.get($stateParams.programId);
 
     $scope.init();
-
-
-    // $scope.isExpanded = true;
 
 }])
 
