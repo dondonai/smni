@@ -1,6 +1,6 @@
 <ion-view view-title="Now Playing">
 
-  <ion-content scrollbar-y="false">
+  <ion-content scrollbar-x="false" scrollbar-y="false">
   <div>
   	<div>
 	    <div class="embed-responsive embed-responsive-16by9">
@@ -16,8 +16,18 @@
 		    <p>{{videoInfo[0].snippet.description}}</p>
 		    <p>
 		    	<!-- <a href="#" class="subdued positive"><i class="icon ion-ios-redo"></i> Share</a> -->
+		    	<!-- {{videoInfo[0].id}} -->
 		    </p>
 		</div>
+
+        <div class="item tabs tabs-secondary">
+            <a class="tab-item animate-ripple" data-ink-color="#00aced" data-ink-opacity="0.8" ng-click="shareViaTwitter('{{videoInfo[0].snippet.title}}', null, 'https://www.youtube.com/watch?v={{videoInfo[0].id}}')"><i class="icon ion-social-twitter"></i></a>
+            <a class="tab-item animate-ripple" data-ink-color="#dd4b39" data-ink-opacity="0.8" ng-click="shareViaGooglePlus('{{videoInfo[0].snippet.title}}', null, 'https://www.youtube.com/watch?v={{videoInfo[0].id}}')"><i class="icon ion-social-googleplus"></i></a>
+            <a class="tab-item animate-ripple" data-ink-color="#4dc247" data-ink-opacity="0.8" ng-click="shareViaWhatsApp('{{videoInfo[0].snippet.title}}', null, 'https://www.youtube.com/watch?v={{videoInfo[0].id}}')"><i class="icon ion-social-whatsapp"></i></a>
+            <a class="tab-item animate-ripple" data-ink-color="#336699" data-ink-opacity="0.8" ng-click="shareViaEmail('{{videoInfo[0].snippet.title}}')"><i class="icon ion-android-mail"></i></a>
+            <a class="tab-item animate-ripple" data-ink-color="#336699" data-ink-opacity="0.8" ng-click="shareViaSMS('{{videoInfo[0].snippet.title}}')"><i class="icon ion-android-textsms"></i></a>
+            <a class="tab-item animate-ripple" data-ink-color="#336699" data-ink-opacity="0.8" ng-click="openLink('{{videoInfo[0].id}}')"><i class="icon ion-android-open"></i></a>
+        </div>
 	</div>
 
   </ion-content>
