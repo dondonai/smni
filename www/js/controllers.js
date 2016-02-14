@@ -65,6 +65,10 @@ angular.module('smni.controllers', [])
           content: 'You are not connected to the internet. <br>Click ok to close the app.'
         }).then( function () {
             ionic.Platform.exitApp();
+            // TODO: Disable tabs when offline.
+            // TODO: Display message when offline and don't close the app anymore.
+            // TODO: apm install term2
+
         });
 
       });
@@ -88,7 +92,7 @@ angular.module('smni.controllers', [])
     // $scope.sourceHTTP2 = function() {
     //     $cordovaInAppBrowser.open('http://smni.live-s.cdn.bitgravity.com/cdn-live/_definst_/smni/live/feed001/playlist.m3u8?width=490&height=350&streamType=live&AutoPlay=true&ScrubMode=simple&BufferTime=1.5&AutoBitrate=off&scaleMode=letterbox&DefaultRatio=1.777778&LogoPosition=topleft&ColorBase=0&ColorControl=14277081&ColorHighlight=16777215&ColorFeature=14277081&selectedIndex=0', '_system', options);
     // }
-    
+
     // Set Motion
     $timeout(function() {
         ionicMaterialMotion.slideUp({
@@ -109,7 +113,7 @@ angular.module('smni.controllers', [])
 
                 ionicMaterialInk.displayEffect();
             }, 1000);
- 
+
         }, function (err) {
             console.log( err );
         });
@@ -143,7 +147,7 @@ angular.module('smni.controllers', [])
     };
 
     $scope.shareViaEmail = function (msg) {
-        $cordovaSocialSharing.shareViaEmail( 
+        $cordovaSocialSharing.shareViaEmail(
             msg,
             '',
             null,
@@ -186,7 +190,7 @@ angular.module('smni.controllers', [])
         ionicMaterialMotion.fadeSlideInRight({
             startVelocity: 3000
         });
-        
+
         ionicMaterialInk.displayEffect();
 
     }, 300);
@@ -199,7 +203,7 @@ angular.module('smni.controllers', [])
 
 }])
 
-.controller('ProgramDetailCtrl', ['$scope', '$stateParams', 'ProgramsFactory', 'ProgramListFactory', '$ionicLoading', '$cordovaNetwork', '$ionicPopup', '$timeout', 'ionicMaterialMotion', 'ionicMaterialInk', function($scope, $stateParams, ProgramsFactory, ProgramListFactory, $ionicLoading, $cordovaNetwork, $ionicPopup, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+.controller('ProgramDetailCtrl', ['$scope', '$stateParams', 'ProgramsFactory', 'ProgramListFactory', '$ionicLoading', '$cordovaNetwork', '$ionicPopup', '$timeout', 'ionicMaterialMotion', 'ionicMaterialInk', '$window', function($scope, $stateParams, ProgramsFactory, ProgramListFactory, $ionicLoading, $cordovaNetwork, $ionicPopup, $timeout, ionicMaterialMotion, ionicMaterialInk, $window) {
 
     // console.log( '$stateParams.programId: ' + $stateParams.programId );
 
@@ -222,20 +226,53 @@ angular.module('smni.controllers', [])
         // console.log( $scope.program );
     };
 
-    $scope.programItem = function() {
+    var random = false;
+
+    $scope.randomize = function () {
+        // random = true;
+        $scope.rankedList = [];
+        $timeout( function () {
+            $scope.programItem( true );
+        }, 700);
+    };
+
+    $scope.programItem = function( randomized ) {
         var params = {
             type: 'playlistItems',
-            maxResults: '20',
+            maxResults: '50',
             playlistId: playlistId
         };
 
         // $ionicLoading.show();
 
+        random = randomized;
+
         ProgramsFactory.get(params)
             .$promise.then(function(res) {
                 $ionicLoading.hide();
                 $scope.programItems = res.items;
-                console.log($scope.programItems);
+                // console.log($scope.programItems);
+
+                $scope.rankedList = [];
+
+                var iRank = 1;
+
+                if ( random === true ) {
+                    angular.forEach($scope.programItems, function(item) {
+                        $scope.rankedList.push({
+                            item: item,
+                            rank: 0.5 - $window.Math.random()
+                        });
+                    });
+                } else {
+                    angular.forEach($scope.programItems, function(item) {
+                        $scope.rankedList.push({
+                            item: item,
+                            rank: iRank++
+                        });
+                    });
+                }
+
 
                 // Set Motion
                 $timeout(function() {
@@ -259,6 +296,7 @@ angular.module('smni.controllers', [])
                 // alert( 'Error occured: ' + err );
                 // ionicLoading.hide();
             });
+
     };
 
     $scope.isOffline = function() {
@@ -276,7 +314,7 @@ angular.module('smni.controllers', [])
             });
         }, 300);
     };
-    
+
     // $scope.program = ProgramListFactory.get($stateParams.programId);
 
     $scope.init();
@@ -313,7 +351,7 @@ angular.module('smni.controllers', [])
         }, 300);
 
         ionicMaterialInk.displayEffect();
-        
+
             }, function(err) {
                 console.log(err);
                 alert('Error: ' + err);
@@ -326,7 +364,7 @@ angular.module('smni.controllers', [])
     $scope.$on('youtube.player.ready', function($event, player) {
         $ionicLoading.hide();
         var myPlayer = true;
-        
+
 
 
     });
@@ -355,7 +393,7 @@ angular.module('smni.controllers', [])
     };
 
     $scope.shareViaEmail = function (msg) {
-        $cordovaSocialSharing.shareViaEmail( 
+        $cordovaSocialSharing.shareViaEmail(
             'Watch and be blessed! ' + msg,
             '',
             null,
@@ -406,7 +444,7 @@ angular.module('smni.controllers', [])
 }])
 
 .controller('AboutCtrl', ['$scope', '$stateParams', '$timeout', '$cordovaInAppBrowser', 'ionicMaterialInk', 'ionicMaterialMotion', function ($scope, $stateParams, $timeout, $cordovaInAppBrowser, ionicMaterialInk, ionicMaterialMotion ) {
-    
+
     var options = {
         location: 'no',
         clearcache: 'no',
