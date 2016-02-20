@@ -22,12 +22,19 @@
 
     <!-- <img class="full-image" ng-src="{{program.img}}"> -->
     <div class="content">
-      <div class="item item-button-right">
-        <a class="clear" ng-click="randomize()">
+      <div class="item item-button-right row order" style="text-align: center">
+        <a class="clear col" ng-click="randomize()">
           Shuffle <i class="icon ion-ios-shuffle-strong"></i>
         </a>
+        <a class="clear col animate-fade-slide-in-right" ng-click="reload()" ng-hide="reloadDisabled">
+            Un-Shuffled <i class="icon ion-ios-reload"></i>
+        </a>
+
+        <!-- <button class="button button-clear col" ng-click="reload()" ng-disabled="reloadDisabled">
+          Shuffle <i class="icon ion-ios-reload"></i>
+        </button> -->
       </div>
-      
+
       <div ng-hide="rankedList.length > 0" class="text-center padding">
           <ion-spinner></ion-spinner>
       </div>
@@ -43,7 +50,7 @@
           <h2>{{programItem.snippet.title}}</h2>
           <i class="icon ion-chattable"></i>
         </a> -->
-      </div>    
+      </div>
     </div>
 
 

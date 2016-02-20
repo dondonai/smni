@@ -236,6 +236,13 @@ angular.module('smni.controllers', [])
         }, 700);
     };
 
+    $scope.reload = function () {
+      $scope.rankedList = [];
+      $timeout ( function () {
+        $scope.programItem( false );
+      }, 700);
+    };
+
     $scope.programItem = function( randomized ) {
         var params = {
             type: 'playlistItems',
@@ -258,6 +265,7 @@ angular.module('smni.controllers', [])
                 var iRank = 1;
 
                 if ( random === true ) {
+                  $scope.reloadDisabled = false;
                     angular.forEach($scope.programItems, function(item) {
                         $scope.rankedList.push({
                             item: item,
@@ -265,6 +273,7 @@ angular.module('smni.controllers', [])
                         });
                     });
                 } else {
+                  $scope.reloadDisabled = true;
                     angular.forEach($scope.programItems, function(item) {
                         $scope.rankedList.push({
                             item: item,

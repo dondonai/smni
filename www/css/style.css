@@ -32,3 +32,6 @@
 .bar.bar-header .button+.title {
     left: 0;
 }
+.order {
+  text-align: center;
+}
