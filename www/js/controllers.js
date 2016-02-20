@@ -107,7 +107,7 @@ angular.module('smni.controllers', [])
 
             $timeout( function () {
                 ionicMaterialMotion.fadeSlideInRight({
-                    startVelocity: 3000
+                    starVelocity: 3000
                 });
 
                 ionicMaterialInk.displayEffect();
