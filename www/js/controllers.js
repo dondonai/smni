@@ -67,7 +67,6 @@ angular.module('smni.controllers', [])
             ionic.Platform.exitApp();
             // TODO: Disable tabs when offline.
             // TODO: Display message when offline and don't close the app anymore.
-            // TODO: apm install term2
 
         });
 
@@ -217,6 +216,7 @@ angular.module('smni.controllers', [])
 
         $scope.program = ProgramListFactory.get( $stateParams.programId );
         $scope.programTitle();
+        // $scope.programResults();
     };
 
     var playlistId = $stateParams.programId;
@@ -252,7 +252,7 @@ angular.module('smni.controllers', [])
                 $ionicLoading.hide();
                 $scope.programItems = res.items;
                 // console.log($scope.programItems);
-
+                // TODO: Save res to rankedList so that no need to request to the server again
                 $scope.rankedList = [];
 
                 var iRank = 1;
@@ -298,6 +298,27 @@ angular.module('smni.controllers', [])
             });
 
     };
+
+    // var iRank = 1;
+    // $scope.programResults = function () {
+    //   if ( random === true ) {
+    //       angular.forEach($scope.programItems, function(item) {
+    //           $scope.rankedList.push({
+    //               item: item,
+    //               rank: 0.5 - $window.Math.random()
+    //           });
+    //       });
+    //   } else {
+    //       angular.forEach($scope.programItems, function(item) {
+    //           $scope.rankedList.push({
+    //               item: item,
+    //               rank: iRank++
+    //           });
+    //       });
+    //   }
+    //   console.log($scope.rankedList);
+    // };
+
 
     $scope.isOffline = function() {
         $ionicPopup.alert({

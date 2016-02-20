@@ -1,5 +1,5 @@
 ***
-# __SMNI App__
+# __SMNI__
 ***
 
 #### This is an exclusive project for Sonshine Media Network International that is based in the Philippines.

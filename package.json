@@ -1,7 +1,7 @@
 {
-  "name": "SMNIApp",
+  "name": "SMNI",
   "version": "2.14.0",
-  "description": "SMNIApp: An Ionic project for an online streaming for Sonshine Media Network International",
+  "description": "SMNI: An Ionic project for an online streaming for Sonshine Media Network International",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-concat": "^2.2.0",
