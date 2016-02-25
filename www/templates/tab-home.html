@@ -16,10 +16,22 @@
         </div>
     </div>
     <div>
-        <button class="button button-raised button-block button-stable" data-ink-opacity="0.8" ng-click="sourceRtmp()">
+        <button class="button button-raised button-block button-stable" data-ink-opacity="0.8" ng-click="sourceRtmp()" ng-disabled="streamDisabled">
             Launch Streaming
         </button>
     </div>
+
+    <div ng-hide="smniLoading === false" class="text-center padding">
+      <ion-spinner></ion-spinner>
+    </div>
+    <div class="text-center padding stable" ng-show="smniError" ng-bind-html="smniError"><i class="icon ion-android-sad"></i> {{smniError}}</div>
+
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="smniRefresh()"
+      spinner="ripple"
+      pulling-icon="ion-ios-refresh-outline">
+    </ion-refresher>
     <div class="content feeds">
         <div class="list card animate-fade-slide-in-right" ng-repeat="feed in feeds">
             <div class="item item-body item-text-wrap item-stable">
