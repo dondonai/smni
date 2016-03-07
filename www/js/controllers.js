@@ -53,7 +53,7 @@ angular.module('smni.controllers', [])
             });
 
             ionicMaterialInk.displayEffect();
-          }, 700);
+          }, 1000);
 
         }, function (err) {
 
@@ -175,13 +175,13 @@ angular.module('smni.controllers', [])
 
     ionicMaterialInk.displayEffect();
 
-  }, 300);
+  }, 1000);
 
   $timeout(function () {
     ionicMaterialMotion.blinds({
       startVelocity: 3000,
     });
-  }, 700);
+  }, 1000);
 
 })
 
