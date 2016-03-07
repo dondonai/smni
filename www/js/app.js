@@ -25,19 +25,22 @@ angular.module('smni', ['ionic', 'smni.controllers', 'smni.services', 'ngCordova
 
 })
 
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
+
+  $ionicConfigProvider.backButton.previousTitleText(false).text('');
+
   $stateProvider
 
   // setup an abstract state for the tabs directive
     .state('tab', {
     url: '/tab',
     abstract: true,
-    templateUrl: 'templates/tabs.html'
+    templateUrl: 'templates/tabs.html',
   })
 
   // Each tab has its own nav history stack:
@@ -47,9 +50,9 @@ angular.module('smni', ['ionic', 'smni.controllers', 'smni.services', 'ngCordova
     views: {
       'tab-home': {
         templateUrl: 'templates/tab-home.html',
-        controller: 'HomeCtrl'
-      }
-    }
+        controller: 'HomeCtrl',
+      },
+    },
   })
 
   .state('tab.programs', {
@@ -57,28 +60,29 @@ angular.module('smni', ['ionic', 'smni.controllers', 'smni.services', 'ngCordova
       views: {
         'tab-programs': {
           templateUrl: 'templates/tab-programs.html',
-          controller: 'ProgramsCtrl'
-        }
-      }
+          controller: 'ProgramsCtrl',
+        },
+      },
     })
     .state('tab.program-detail', {
       url: '/programs/:programId',
       views: {
         'tab-programs': {
           templateUrl: 'templates/program-detail.html',
-          controller: 'ProgramDetailCtrl'
-        }
-      }
+          controller: 'ProgramDetailCtrl',
+        },
+      },
     })
     .state('tab.video', {
       url: '/video/:videoId',
       views: {
         'tab-programs': {
           templateUrl: 'templates/video.html',
-          controller: 'playVideoCtrl'
-        }
-      }
+          controller: 'playVideoCtrl',
+        },
+      },
     })
+
     // .state('tab.program-detail', {
     //   url: '/programs/:chatId',
     //   views: {
@@ -94,9 +98,9 @@ angular.module('smni', ['ionic', 'smni.controllers', 'smni.services', 'ngCordova
     views: {
       'tab-about': {
         templateUrl: 'templates/tab-about.html',
-        controller: 'AboutCtrl'
-      }
-    }
+        controller: 'AboutCtrl',
+      },
+    },
   });
 
   // if none of the above states are matched, use this as the fallback

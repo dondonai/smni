@@ -1,6 +1,6 @@
 angular.module('smni.controllers', [])
 
-.controller('HomeCtrl', ['$scope', '$ionicPlatform', '$cordovaInAppBrowser', '$ionicPopup', '$timeout', 'ionicMaterialMotion', 'ionicMaterialInk', 'FacebookFactory', '$cordovaSocialSharing', function ($scope, $ionicPlatform, $cordovaInAppBrowser, $ionicPopup, $timeout, ionicMaterialMotion, ionicMaterialInk, FacebookFactory, $cordovaSocialSharing) {
+.controller('HomeCtrl', function ($scope, $ionicPlatform, $cordovaInAppBrowser, $ionicPopup, $timeout, ionicMaterialMotion, ionicMaterialInk, FacebookFactory, $cordovaSocialSharing) {
 
   $scope.smniLoading = true;
   $scope.streamDisabled = true;
@@ -157,9 +157,9 @@ angular.module('smni.controllers', [])
 
   // $ionicPlatform.ready( $scope.checkConnection() );
 
-}])
+})
 
-.controller('ProgramsCtrl', ['$scope', '$stateParams', 'ProgramListFactory', '$timeout', 'ionicMaterialMotion', 'ionicMaterialInk', function ($scope, $stateParams, ProgramListFactory, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+.controller('ProgramsCtrl', function ($scope, $stateParams, ProgramListFactory, $timeout, ionicMaterialMotion, ionicMaterialInk) {
 
   if (typeof analytics !== 'undefined') {
     analytics.trackView('Programs');
@@ -183,9 +183,9 @@ angular.module('smni.controllers', [])
     });
   }, 700);
 
-}])
+})
 
-.controller('ProgramDetailCtrl', ['$scope', '$stateParams', 'ProgramsFactory', 'ProgramListFactory', '$ionicPopup', '$timeout', 'ionicMaterialMotion', 'ionicMaterialInk', '$window', function ($scope, $stateParams, ProgramsFactory, ProgramListFactory, $ionicPopup, $timeout, ionicMaterialMotion, ionicMaterialInk, $window) {
+.controller('ProgramDetailCtrl', function ($scope, $stateParams, ProgramsFactory, ProgramListFactory, $ionicPopup, $timeout, ionicMaterialMotion, ionicMaterialInk, $window) {
 
   $scope.init = function () {
     // Set Motion
@@ -318,9 +318,9 @@ angular.module('smni.controllers', [])
 
   $scope.init();
 
-}])
+})
 
-.controller('playVideoCtrl', ['$scope', '$stateParams', 'ProgramsFactory', '$cordovaInAppBrowser', '$cordovaSocialSharing', '$timeout', 'ionicMaterialInk', 'ionicMaterialMotion', function ($scope, $stateParams, ProgramsFactory, $cordovaInAppBrowser, $cordovaSocialSharing, $timeout, ionicMaterialInk, ionicMaterialMotion) {
+.controller('playVideoCtrl', function ($scope, $stateParams, ProgramsFactory, $cordovaInAppBrowser, $cordovaSocialSharing, $timeout, ionicMaterialInk, ionicMaterialMotion) {
 
   var videoId = $stateParams.videoId;
   var player = '';
@@ -339,7 +339,7 @@ angular.module('smni.controllers', [])
   $scope.theVideo = function () {
     var params = {
       type: 'videos',
-      id: videoId
+      id: videoId,
     };
 
     $timeout(function () {
@@ -377,13 +377,13 @@ angular.module('smni.controllers', [])
   $scope.playerVars = {
     controls: 2,
     autoplay: 0,
-    showinfo: 0
+    showinfo: 0,
   };
 
   var options = {
     location: 'no',
     clearcache: 'no',
-    toolbar: 'no'
+    toolbar: 'no',
   };
 
   $scope.openLink = function () {
@@ -462,9 +462,9 @@ angular.module('smni.controllers', [])
 
   $scope.init();
 
-}])
+})
 
-.controller('videoListCtrl', ['$scope', 'ProgramsFactory', '$stateParams', function ($scope, ProgramsFactory, $stateParams) {
+.controller('videoListCtrl', function ($scope, ProgramsFactory, $stateParams) {
 
   // var playlistId = $stateParams.playlistId;
 
@@ -472,7 +472,7 @@ angular.module('smni.controllers', [])
     var params = {
       type: 'playlistItems',
       maxResults: '20',
-      playlistId: 'PLBvNelqMoACDq83y9R3IKvJlQLX3uoCJ7'
+      playlistId: 'PLBvNelqMoACDq83y9R3IKvJlQLX3uoCJ7',
     };
 
     ProgramsFactory.get(params)
@@ -486,9 +486,9 @@ angular.module('smni.controllers', [])
 
   $scope.getVideosFrmPrograms();
 
-}])
+})
 
-.controller('AboutCtrl', ['$scope', '$stateParams', '$timeout', '$cordovaInAppBrowser', 'ionicMaterialInk', 'ionicMaterialMotion', function ($scope, $stateParams, $timeout, $cordovaInAppBrowser, ionicMaterialInk, ionicMaterialMotion) {
+.controller('AboutCtrl', function ($scope, $stateParams, $timeout, $cordovaInAppBrowser, ionicMaterialInk, ionicMaterialMotion) {
 
   var options = {
     location: 'no',
@@ -505,8 +505,8 @@ angular.module('smni.controllers', [])
   };
 
   $timeout(function () {
+
     ionicMaterialInk.displayEffect();
   }, 300);
 
-}])
-;
+});
