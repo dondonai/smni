@@ -6,14 +6,19 @@
 -->
 <ion-view view-title="{{program.name}}">
   <ion-content>
-    <div class="hero slide-up" style="background-image: url('{{program.img}}');">
+    <div class="program-detail header">
+      <h3 class="program-name">{{program.name}}</h3>
+      <img ng-src="{{program.img}}" alt="">
+    </div>
+
+    <!-- <div class="hero slide-up" style="background-image: url('{{program.img}}');"> -->
     <!-- {{program.img}} -->
-      <div class="content">
+      <!-- <div class="content"> -->
           <!-- <div class="avatar" style="background-image: url('img/daenerys.jpg');"></div> -->
-          <h3><a class="light">{{program.name}}</a></h3>
+          <!-- <h3><a class="light">{{program.name}}</a></h3>
           <h4></h4>
       </div>
-    </div>
+    </div> -->
 
 <!--     <div class="item item-body item-text-wrap item-assertive" ng-if="offline === true">
       <div><i class="icon ion-ios-close-outline"></i> Error: Cannot connect to Youtube.</div>
@@ -50,7 +55,7 @@
           <ion-spinner></ion-spinner>
       </div> -->
 
-      <div class="list animate-fade-slide-in-right">
+      <div class="list">
         <!-- <div class="item"></div> -->
         <a class="item item-avatar item-icon-right item-text-wrap ink" ng-repeat="programItem in rankedList | orderBy: 'rank' | limitTo: 10" ui-sref="tab.video({ videoId: programItem.item.snippet.resourceId.videoId })">
           <img ng-src="{{programItem.item.snippet.thumbnails.default.url}}">

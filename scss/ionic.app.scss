@@ -58,3 +58,21 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 .order {
   text-align: center;
 }
+.program-detail {
+  position: relative;
+}
+.home-header img,
+.program-detail.header img {
+  width: 100%;
+}
+.launch-streaming .button.button-block {
+  margin-top: 0;
+}
+h3.program-name {
+  bottom: 10px;
+  color: #fff;
+  font-size: 20px;
+  position: absolute;
+  left: 10px;
+  text-shadow: -1px 1px 1px #333;
+}

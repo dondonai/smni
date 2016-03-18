@@ -1,21 +1,9 @@
 <ion-view view-title="SMNI Main">
   <ion-content scrollbar-y="false">
-    <div class="hero slide-up stable-bg" style="background-image: url('img/main-bg.jpg');">
-        <div class="content">
-            <!-- <div class="avatar" style="background-image: url('img/daenerys.jpg');"></div> -->
-            <!-- <div class="avatar" style="border: none;">
-                <button class="button button-stable button-fab"><i class="icon ion-play"></i></button>
-            </div> -->
-            <!-- <h3><a class="assertive-900">Sonshine Media Network International</a></h3> -->
-            <!-- <h4></h4> -->
-            <!-- <div class="buttons buttons-right header-item">
-                <span class="right-buttons" style="float: right;">
-                  <button class="button button-stable button-fab" ng-click="sourceRtmp()"><i class="icon ion-play"></i></button>
-                </span>
-            </div> -->
-        </div>
+    <div class="home-header">
+      <img ng-src="img/main-bg.jpg" alt="">
     </div>
-    <div>
+    <div class="launch-streaming">
         <button class="button button-raised button-block button-stable" data-ink-opacity="0.8" ng-click="sourceRtmp()" ng-disabled="streamDisabled">
             Launch Streaming
         </button>
@@ -33,7 +21,7 @@
       pulling-icon="ion-ios-refresh-outline">
     </ion-refresher>
     <div class="content feeds">
-        <div class="list card animate-fade-slide-in-right" ng-repeat="feed in feeds">
+        <div class="list card" ng-repeat="feed in feeds">
             <div class="item item-body item-text-wrap item-stable">
                 <div>{{feed.message}}</div>
                 <div ng-hide="feed.message">{{feed.story}}</div>
