@@ -11,6 +11,18 @@ angular.module('smni.controllers', [])
   // checkConnection();
   // $scope.init();
 
+  // $scope.hideNavBar = function() {
+  //     // document.getElementsByTagName('ion-nav-bar')[0].style.display = 'none';
+  //     // document.getElementsByTagName('ion-nav-bar').[0].style.left = '0';
+  //     var theTitle = document.getElementsByClassName('title');
+  //     angular.element(theTitle).css('left', '0');
+  // };
+
+  // $scope.$on('$ionicView.enter', function (viewInfo, state) {
+  //   // console.log('CTRL - $ionicView.loaded', viewInfo, state);
+  //   $scope.hideNavBar();
+  // });
+
   var options = {
     location: 'no',
     clearcache: 'no',
@@ -41,6 +53,7 @@ angular.module('smni.controllers', [])
     }
 
     $timeout(function () {
+
       FacebookFactory.get()
         .$promise.then(function (res) {
           $scope.feeds = res.data;
@@ -165,6 +178,18 @@ angular.module('smni.controllers', [])
     analytics.trackView('Programs');
   }
 
+  // $scope.hideNavBar = function() {
+  //     // document.getElementsByTagName('ion-nav-bar')[0].style.display = 'none';
+  //     // document.getElementsByTagName('ion-nav-bar').[0].style.left = '0';
+  //     var theTitle = document.getElementsByClassName('title');
+  //     angular.element(theTitle).css('left', '0');
+  // };
+  //
+  // $scope.$on('$ionicView.enter', function (viewInfo, state) {
+  //   // console.log('CTRL - $ionicView.loaded', viewInfo, state);
+  //   $scope.hideNavBar();
+  // });
+
   $scope.programs = ProgramListFactory.all();
 
   // Set Motion
@@ -183,11 +208,15 @@ angular.module('smni.controllers', [])
     });
   }, 1000);
 
+  // $scope.hideNavBar();
+
 })
 
 .controller('ProgramDetailCtrl', function ($scope, $stateParams, ProgramsFactory, ProgramListFactory, $ionicPopup, $timeout, ionicMaterialMotion, ionicMaterialInk, $window) {
 
   $scope.init = function () {
+
+    // $scope.showNavBar();
     // Set Motion
     $timeout(function () {
       ionicMaterialMotion.slideUp({
@@ -203,6 +232,11 @@ angular.module('smni.controllers', [])
       analytics.trackView('Progam ID: ' + $stateParams.programId);
     }
   };
+
+  // $scope.showNavBar = function() {
+  //     document.getElementsByTagName('ion-nav-bar')[0].style.display = 'block';
+  //     document.getElementsByTagName('ion-nav-bar')[0].style.left = 'auto';
+  // };
 
   var playlistId = $stateParams.programId;
 
@@ -356,6 +390,9 @@ angular.module('smni.controllers', [])
               selector: '.slide-up',
             });
           }, 700);
+          $timeout(function () {
+            ionicMaterialMotion.fadeSlideInRight();
+          }, 3000);
 
           ionicMaterialInk.displayEffect();
 
@@ -401,6 +438,14 @@ angular.module('smni.controllers', [])
     }
 
     $cordovaSocialSharing.shareViaTwitter('https://www.youtube.com/watch?v=' + videoId, null, 'https://www.youtube.com/watch?v=' + videoId);
+  };
+
+  $scope.shareViaFacebook = function () {
+    if (typeof analytics !== undefined) {
+      analytics.trackEvent('Button', 'Facebook', 'YT shareViaFacebook');
+    }
+
+    $cordovaSocialSharing.shareViaFacebook('https://www.youtube.com/watch?v=' + videoId, null, 'https://www.youtube.com/watch?v=' + videoId);
   };
 
   $scope.shareViaGooglePlus = function () {
@@ -499,6 +544,18 @@ angular.module('smni.controllers', [])
   if (typeof analytics !== 'undefined') {
     analytics.trackView('About');
   }
+
+  $scope.hideNavBar = function() {
+      // document.getElementsByTagName('ion-nav-bar')[0].style.display = 'none';
+      // document.getElementsByTagName('ion-nav-bar').[0].style.left = '0';
+      var theTitle = document.getElementsByClassName('title');
+      angular.element(theTitle).css('left', '0');
+  };
+
+  $scope.$on('$ionicView.enter', function (viewInfo, state) {
+    // console.log('CTRL - $ionicView.loaded', viewInfo, state);
+    $scope.hideNavBar();
+  });
 
   $scope.like = function () {
     $cordovaInAppBrowser.open('https://www.facebook.com/SMNIApp/', '_blank', options);

@@ -21,3 +21,40 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+.embed-responsive {
+    position: relative;
+    display: block;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.embed-responsive.embed-responsive-16by9 {
+    padding-bottom: 56.25%;
+}
+
+.embed-responsive-item {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+.feeds .tab-item .icon,
+.current-video .tab-item .icon {
+    font-size: 24px;
+}
+.list .item.item-divider {
+    border-bottom: 1px solid #333;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+.bar.bar-header .button+.title,
+.bar-positive.bar.bar-header.has-tabs-top .title.title-left.header-item {
+    left: 0;
+}
+.order {
+  text-align: center;
+}

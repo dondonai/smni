@@ -25,7 +25,7 @@ angular.module('smni', ['ionic', 'smni.controllers', 'smni.services', 'ngCordova
 
 })
 
-.config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+.config( ['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider', function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -106,4 +106,4 @@ angular.module('smni', ['ionic', 'smni.controllers', 'smni.services', 'ngCordova
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/home');
 
-});
+}]);

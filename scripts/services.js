@@ -1,14 +1,14 @@
 angular.module('smni.services', ['ngResource'])
 
-.factory('FacebookFactory', function ($resource) {
+.factory('FacebookFactory', ['$resource', function ($resource) {
   return $resource('https://graph.facebook.com/v2.5/105414913766/:type', {
     type: 'feed',
     limit: '10',
     access_token: '1054156781281122|WK64HjQfUfCnxjgPCZZ2Zw8prWM',
   });
-})
+}])
 
-.factory('ProgramsFactory', function ($resource) {
+.factory('ProgramsFactory', ['$resource', function ($resource) {
   return $resource('https://www.googleapis.com/youtube/v3/:type', {
     type: 'playlists',
     part: 'snippet',
@@ -18,7 +18,7 @@ angular.module('smni.services', ['ngResource'])
 
     // key: 'AIzaSyDhSrCUMdAjHYuHiJzaptIRifF_mIE2N0s'
   });
-})
+}])
 
 .factory('ProgramListFactory', function () {
 
